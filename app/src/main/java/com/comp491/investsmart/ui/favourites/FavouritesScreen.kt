@@ -1,4 +1,4 @@
-package com.comp491.investsmart.ui.home
+package com.comp491.investsmart.ui.favourites
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,8 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HomeScreen() {
+fun FavouritesScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Home Screen", modifier = Modifier.align(Alignment.Center))
+        Text(text = "Favourites Screen", modifier = Modifier.align(Alignment.Center))
     }
 }

@@ -1,12 +1,18 @@
 package com.comp491.investsmart.navigation
 
-sealed class NavRoute(val path: String) {
+sealed class NavRoute(val route: String) {
 
     object Home: NavRoute("home")
 
+    object Search: NavRoute("search")
+
+    object Favourites: NavRoute("favourites")
+
+    object Profile: NavRoute("profile")
+
     fun withArgs(vararg args: String): String {
         return buildString {
-            append(path)
+            append(route)
             args.forEach{ arg ->
                 append("/$arg")
             }
@@ -15,7 +21,7 @@ sealed class NavRoute(val path: String) {
 
     fun withArgsFormat(vararg args: String) : String {
         return buildString {
-            append(path)
+            append(route)
             args.forEach{ arg ->
                 append("/{$arg}")
             }
