@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.comp491.investsmart.ui.favourites.FavouritesScreen
 import com.comp491.investsmart.ui.profile.ProfileScreen
 import com.comp491.investsmart.ui.search.SearchScreen
+import com.comp491.investsmart.ui.settings.SettingsScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -39,5 +40,9 @@ private fun addHomeScreen(
 
     navGraphBuilder.composable(route = NavRoute.Profile.route) {
         ProfileScreen()
+    }
+
+    navGraphBuilder.composable(route = NavRoute.Settings.route) {
+        SettingsScreen()
     }
 }

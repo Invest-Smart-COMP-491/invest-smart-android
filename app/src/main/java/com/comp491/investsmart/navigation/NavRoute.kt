@@ -10,6 +10,8 @@ sealed class NavRoute(val route: String) {
 
     object Profile: NavRoute("profile")
 
+    object Settings: NavRoute("settings")
+
     fun withArgs(vararg args: String): String {
         return buildString {
             append(route)
