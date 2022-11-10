@@ -15,18 +15,25 @@ import com.comp491.investsmart.ui.theme.LightBlue
 
 @Composable
 fun TopNavigationBar(navController: NavController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute: String? = navBackStackEntry?.destination?.route
+    val routesToShowBackButton = listOf(
+        NavRoute.Settings.route,
+    )
+    val routesToShowSettingsIcon = listOf(
+        NavRoute.Home.route,
+        NavRoute.Search.route,
+        NavRoute.Favourites.route,
+        NavRoute.Profile.route,
+    )
+
     TopAppBar(
         title = {},
         navigationIcon = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentRoute: String? = navBackStackEntry?.destination?.route
-            val routesToShowBackButton = emptyList<String>()
-
             if (routesToShowBackButton.contains(currentRoute)) {
                 IconButton(
                     onClick = {
                         navController.navigateUp()
-                        navController.popBackStack()
                     }
                 ) {
                     Icon(
@@ -37,15 +44,17 @@ fun TopNavigationBar(navController: NavController) {
             }
         },
         actions = {
-            IconButton(
-                onClick = {
-                    navController.navigate(NavRoute.Settings.route)
+            if (routesToShowSettingsIcon.contains(currentRoute)) {
+                IconButton(
+                    onClick = {
+                        navController.navigate(NavRoute.Settings.route)
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.settings_icon),
+                        contentDescription = null,
+                    )
                 }
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.settings_icon),
-                    contentDescription = null,
-                )
             }
         },
         backgroundColor = Color.White,
