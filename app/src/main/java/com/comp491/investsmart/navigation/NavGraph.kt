@@ -1,6 +1,7 @@
 package com.comp491.investsmart.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.comp491.investsmart.ui.home.HomeScreen
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -27,7 +28,7 @@ private fun addHomeScreen(
     navGraphBuilder: NavGraphBuilder
 ) {
     navGraphBuilder.composable(route = NavRoute.Home.route) {
-        HomeScreen()
+        HomeScreen(hiltViewModel())
     }
 
     navGraphBuilder.composable(route = NavRoute.Search.route) {
