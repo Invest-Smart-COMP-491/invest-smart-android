@@ -1,18 +1,11 @@
 package com.comp491.investsmart.ui.home
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.comp491.investsmart.App
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.security.AccessController.getContext
 import javax.inject.Inject
-
 
 data class HomeVMState(
     val stockPrices: List<Pair<String, Double>>,

@@ -1,5 +1,6 @@
 package com.comp491.investsmart.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -147,6 +148,7 @@ private fun NewsList(
                 NewsRow(
                     title = "Facebook parent company Meta will lay off 11,000 employees",
                     text = "The job cuts come as Meta confronts a range of challenges to its core business and makes an uncertain and costly bet on pivoting to the metaverse. It also comes amid a spate of layoffs at other tech firms in recent months as the high-flying sector reacts to high inflation, rising interest rates and fears of a looming recession.",
+                    onNewsClicked = { onNewsClicked(index) },
                 )
             }
 
@@ -166,10 +168,12 @@ private fun NewsList(
 private fun NewsRow(
     title: String,
     text: String,
+    onNewsClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 15.dp),
+            .padding(horizontal = 20.dp, vertical = 15.dp)
+            .clickable { onNewsClicked() },
     ) {
         Text(
             text = title,
