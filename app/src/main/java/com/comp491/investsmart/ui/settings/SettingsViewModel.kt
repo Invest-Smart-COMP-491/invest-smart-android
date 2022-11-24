@@ -1,7 +1,6 @@
 package com.comp491.investsmart.ui.settings
 
 import androidx.lifecycle.ViewModel
-import com.comp491.investsmart.ui.home.HomeVMState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

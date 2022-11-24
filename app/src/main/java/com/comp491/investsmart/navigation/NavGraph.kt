@@ -32,7 +32,7 @@ private fun addHomeScreen(
     }
 
     navGraphBuilder.composable(route = NavRoute.Search.route) {
-        SearchScreen()
+        SearchScreen(hiltViewModel())
     }
 
     navGraphBuilder.composable(route = NavRoute.Favourites.route) {
