@@ -44,6 +44,6 @@ private fun addHomeScreen(
     }
 
     navGraphBuilder.composable(route = NavRoute.Settings.route) {
-        SettingsScreen()
+        SettingsScreen(hiltViewModel())
     }
 }

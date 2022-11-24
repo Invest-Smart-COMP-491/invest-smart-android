@@ -17,10 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comp491.investsmart.ui.theme.PriceGreen
-import com.comp491.investsmart.ui.theme.Price
+import com.comp491.investsmart.ui.theme.PriceRed
 import com.comp491.investsmart.ui.theme.montserratFamily
 import com.comp491.investsmart.R
 import com.comp491.investsmart.ui.theme.DarkGreen
+import com.comp491.investsmart.ui.theme.Black
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
@@ -113,7 +114,7 @@ private fun StockPriceCard(
                 fontFamily = montserratFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
-                color = Color.Black,
+                color = Black,
             )
             Spacer(modifier = Modifier.width(25.dp))
             Text(
@@ -128,7 +129,7 @@ private fun StockPriceCard(
                 color = if(price >= 0) {
                     PriceGreen
                 } else {
-                    Price
+                    PriceRed
                 },
             )
         }
@@ -155,7 +156,7 @@ private fun NewsList(
             if (index != news.size - 1) {
                 item {
                     Divider(
-                        color = Color.Black,
+                        color = Black,
                         thickness = 1.dp,
                     )
                 }
@@ -180,7 +181,7 @@ private fun NewsRow(
             fontFamily = montserratFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 15.sp,
-            color = Color.Black,
+            color = Black,
         )
         Spacer(modifier = Modifier.height(25.dp))
         Text(
@@ -188,7 +189,7 @@ private fun NewsRow(
             fontFamily = montserratFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
-            color = Color.Black,
+            color = Black,
         )
     }
 }

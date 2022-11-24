@@ -13,7 +13,7 @@ data class HomeVMState(
 )
 
 @HiltViewModel
-class HomeViewModel  @Inject constructor(
+class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val vmState = HomeVMState(
