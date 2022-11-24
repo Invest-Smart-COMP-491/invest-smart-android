@@ -9,4 +9,5 @@ interface AssetsRepository {
     suspend fun getAllAssetPrices(): List<AssetPrice>
     suspend fun getAllFavouriteAssets(): List<Asset>
     suspend fun getAllAssets(): List<Asset>
+    suspend fun getAssetsWithKeyword(keyword: String): List<Asset>
 }

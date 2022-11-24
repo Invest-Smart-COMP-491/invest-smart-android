@@ -23,4 +23,8 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun getAllAssets(): List<Asset> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getAssetsWithKeyword(keyword: String): List<Asset> {
+        TODO("Not yet implemented")
+    }
 }
