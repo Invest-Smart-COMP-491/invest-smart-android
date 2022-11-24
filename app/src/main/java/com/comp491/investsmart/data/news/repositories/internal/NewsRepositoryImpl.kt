@@ -9,10 +9,10 @@ class NewsRepositoryImpl @Inject constructor(
 ) : NewsRepository {
 
     override suspend fun getAllNews(): List<News> {
-        return emptyList()
+        TODO("Not yet implemented")
     }
 
     override suspend fun getAssetNews(assetTicker: String): List<News> {
-        return emptyList()
+        TODO("Not yet implemented")
     }
 }
