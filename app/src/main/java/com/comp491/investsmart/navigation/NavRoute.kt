@@ -12,6 +12,8 @@ sealed class NavRoute(val route: String) {
 
     object Settings: NavRoute("settings")
 
+    object Login: NavRoute("login")
+
     fun withArgs(vararg args: String): String {
         return buildString {
             append(route)
