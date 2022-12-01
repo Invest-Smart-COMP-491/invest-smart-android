@@ -5,7 +5,6 @@ import com.comp491.investsmart.domain.news.repositories.NewsRepository
 import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
-
 ) : NewsRepository {
 
     override suspend fun getAllNews(): List<News> {
