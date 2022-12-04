@@ -2,14 +2,14 @@ package com.comp491.investsmart.domain.assets.usecases.internal
 
 import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.domain.assets.repositories.AssetsRepository
-import com.comp491.investsmart.domain.assets.usecases.GetAssetsUseCase
+import com.comp491.investsmart.domain.assets.usecases.GetTrendingAssetsUseCase
 import javax.inject.Inject
 
-class GetAssetsUseCaseImpl @Inject constructor(
+class GetTrendingAssetsUseCaseImpl @Inject constructor(
     private val assetsRepository: AssetsRepository
-): GetAssetsUseCase {
+): GetTrendingAssetsUseCase {
 
     override suspend fun invoke(): List<Asset> {
-        return assetsRepository.getAssets()
+        return assetsRepository.getTrendingAssets()
     }
 }

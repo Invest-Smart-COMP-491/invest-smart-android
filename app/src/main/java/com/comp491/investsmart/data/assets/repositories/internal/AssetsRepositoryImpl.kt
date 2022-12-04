@@ -9,7 +9,7 @@ class AssetsRepositoryImpl @Inject constructor(
 
 ): AssetsRepository {
 
-    override suspend fun getAssets(): List<Asset> {
+    override suspend fun getTrendingAssets(): List<Asset> {
         TODO("Not yet implemented")
     }
 

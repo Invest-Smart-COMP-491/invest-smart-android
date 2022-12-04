@@ -22,9 +22,9 @@ abstract class HiltAssetsModule {
     ): GetFavouriteAssetsUseCase
 
     @Binds
-    abstract fun bindGetAssetsUseCase(
-        getAssetsUseCaseImpl: GetAssetsUseCaseImpl
-    ): GetAssetsUseCase
+    abstract fun bindGetTrendingAssetsUseCase(
+        getTrendingAssetsUseCaseImpl: GetTrendingAssetsUseCaseImpl
+    ): GetTrendingAssetsUseCase
 
     @Binds
     abstract fun bindGetAssetsWithKeywordUseCase(

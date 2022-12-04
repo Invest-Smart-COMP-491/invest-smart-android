@@ -8,7 +8,7 @@ class CommentsRepositoryImpl @Inject constructor(
 
 ): CommentsRepository {
 
-    override suspend fun getAllAssetComments(assetTicker: String): List<Comment> {
+    override suspend fun getAssetComments(assetTicker: String): List<Comment> {
         TODO("Not yet implemented")
     }
 }
