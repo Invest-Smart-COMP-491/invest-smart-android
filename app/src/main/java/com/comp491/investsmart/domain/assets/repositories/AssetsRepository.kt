@@ -5,9 +5,8 @@ import com.comp491.investsmart.domain.assets.entities.AssetPrice
 
 interface AssetsRepository {
 
-    suspend fun getAssetPrices(assetTicker: String): List<AssetPrice>
-    suspend fun getAllAssetPrices(): List<AssetPrice>
-    suspend fun getAllFavouriteAssets(): List<Asset>
-    suspend fun getAllAssets(): List<Asset>
+    suspend fun getAssets(): List<Asset>
     suspend fun getAssetsWithKeyword(keyword: String): List<Asset>
+    suspend fun getFavouriteAssets(): List<Asset>
+    suspend fun getAssetPrices(assetTicker: String): List<AssetPrice>
 }

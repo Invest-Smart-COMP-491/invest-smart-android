@@ -17,19 +17,14 @@ abstract class HiltAssetsModule {
     ): GetAssetPricesUseCase
 
     @Binds
-    abstract fun bindGetAllAssetPricesUseCase(
-        getAllAssetPricesUseCaseImpl: GetAllAssetPricesUseCaseImpl
-    ): GetAllAssetPricesUseCase
-
-    @Binds
-    abstract fun bindGetAllFavouriteAssetsUseCase(
+    abstract fun bindGetFavouriteAssetsUseCase(
         getAllFavouriteAssetsUseCaseImpl: GetAllFavouriteAssetsUseCaseImpl
-    ): GetAllFavouriteAssetsUseCase
+    ): GetFavouriteAssetsUseCase
 
     @Binds
-    abstract fun bindGetAllAssetsUseCase(
-        getAllAssetsUseCaseImpl: GetAllAssetsUseCaseImpl
-    ): GetAllAssetsUseCase
+    abstract fun bindGetAssetsUseCase(
+        getAssetsUseCaseImpl: GetAssetsUseCaseImpl
+    ): GetAssetsUseCase
 
     @Binds
     abstract fun bindGetAssetsWithKeywordUseCase(

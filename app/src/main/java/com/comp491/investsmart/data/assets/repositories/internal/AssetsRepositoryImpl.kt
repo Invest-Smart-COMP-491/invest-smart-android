@@ -8,23 +8,20 @@ import javax.inject.Inject
 class AssetsRepositoryImpl @Inject constructor(
 
 ): AssetsRepository {
-    override suspend fun getAssetPrices(assetTicker: String): List<AssetPrice> {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun getAllAssetPrices(): List<AssetPrice> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getAllFavouriteAssets(): List<Asset> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getAllAssets(): List<Asset> {
+    override suspend fun getAssets(): List<Asset> {
         TODO("Not yet implemented")
     }
 
     override suspend fun getAssetsWithKeyword(keyword: String): List<Asset> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getFavouriteAssets(): List<Asset> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAssetPrices(assetTicker: String): List<AssetPrice> {
         TODO("Not yet implemented")
     }
 }

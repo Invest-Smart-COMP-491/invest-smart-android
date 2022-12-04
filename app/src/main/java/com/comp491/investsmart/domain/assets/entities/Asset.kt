@@ -4,9 +4,8 @@ data class Asset(
     val assetName: String,
     val assetTicker: String,
     val lastPrice: Double,
-    val assetCategoryName: String,
+    val assetCategory: String,
     val viewCount: Int,
-    val imageUrl: String,
+    val photoUrl: String,
     val marketSize: Double,
-    val followerCount: Int,
 )
