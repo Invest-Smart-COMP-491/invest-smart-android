@@ -30,6 +30,7 @@ data class CommentEntity(
 
 fun CommentEntity.toDomain(): Comment {
     return Comment(
+        id = 0,
         username = username,
         userId = userId,
         assetTicker = assetTicker,
@@ -37,5 +38,6 @@ fun CommentEntity.toDomain(): Comment {
         date = date,
         likeCount = likedUsers.size,
         importedFrom = importedFrom,
+        answerCount = 0,
     )
 }

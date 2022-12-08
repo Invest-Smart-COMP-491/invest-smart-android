@@ -36,7 +36,9 @@ private fun HomeScreenContent(
     onNewsClicked: (Int) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 60.dp),
     ) {
         StockPricesList(
             stockPrices = uiState.stockPrices,
@@ -140,9 +142,7 @@ private fun NewsList(
     news: List<String>,
     onNewsClicked: (Int) -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier
-    ) {
+    LazyColumn() {
         news.forEachIndexed { index, n ->
             item {
                 NewsRow(

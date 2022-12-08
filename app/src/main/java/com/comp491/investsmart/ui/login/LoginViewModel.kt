@@ -25,7 +25,6 @@ data class LoginVMState(
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getAllNewsUseCase: GetAllNewsUseCase,
     private val investSmartService: InvestSmartService,
 ) : ViewModel() {
 

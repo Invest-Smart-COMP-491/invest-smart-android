@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.comp491.investsmart.ui.comments.CommentsScreen
 import com.comp491.investsmart.ui.favourites.FavouritesScreen
 import com.comp491.investsmart.ui.login.LoginScreen
 import com.comp491.investsmart.ui.profile.ProfileScreen
@@ -41,7 +42,7 @@ private fun addScreens(
     }
 
     navGraphBuilder.composable(route = NavRoute.Profile.route) {
-        ProfileScreen()
+        ProfileScreen(hiltViewModel(), navController)
     }
 
     navGraphBuilder.composable(route = NavRoute.Settings.route) {
@@ -50,5 +51,9 @@ private fun addScreens(
 
     navGraphBuilder.composable(route = NavRoute.Login.route) {
         LoginScreen(hiltViewModel(), navController)
+    }
+
+    navGraphBuilder.composable(route = NavRoute.Comments.route) {
+        CommentsScreen(hiltViewModel())
     }
 }
