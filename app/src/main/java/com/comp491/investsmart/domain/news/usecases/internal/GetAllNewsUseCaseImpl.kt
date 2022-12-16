@@ -1,5 +1,6 @@
 package com.comp491.investsmart.domain.news.usecases.internal
 
+import com.comp491.investsmart.data.api.Result
 import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.domain.news.repositories.NewsRepository
 import com.comp491.investsmart.domain.news.usecases.GetAllNewsUseCase
@@ -9,7 +10,7 @@ class GetAllNewsUseCaseImpl @Inject constructor(
     private val newsRepository: NewsRepository,
 ): GetAllNewsUseCase {
 
-    override suspend fun invoke(): List<News> {
+    override suspend fun invoke(): Result<List<News>> {
         return newsRepository.getAllNews()
     }
 }

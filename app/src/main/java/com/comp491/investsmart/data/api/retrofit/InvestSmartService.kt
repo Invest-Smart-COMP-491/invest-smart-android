@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface InvestSmartService {
 
-    @GET("/api/news")
+    @GET("/api/trending-stocks/news")
     suspend fun getNews(): Response<List<NewsEntity>>
 
     @GET("/api/news/{assetTicker}")
