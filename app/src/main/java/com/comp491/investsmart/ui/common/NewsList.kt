@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.ui.theme.Black
@@ -21,7 +22,8 @@ import com.comp491.investsmart.ui.theme.montserratFamily
 fun NewsList(
     news: List<News>,
     onNewsClicked: (String) -> Unit,
-    onAssetTickerClicked: (String) -> Unit,
+    onAssetTickerClicked: (String, NavController) -> Unit,
+    navController: NavController,
 ) {
     LazyColumn() {
         news.forEachIndexed { index, n ->
@@ -30,6 +32,7 @@ fun NewsList(
                     news = n,
                     onNewsClicked = onNewsClicked,
                     onAssetTickerClicked = onAssetTickerClicked,
+                    navController = navController,
                 )
             }
 
@@ -49,7 +52,8 @@ fun NewsList(
 private fun NewsRow(
     news: News,
     onNewsClicked: (String) -> Unit,
-    onAssetTickerClicked: (String) -> Unit,
+    onAssetTickerClicked: (String, NavController) -> Unit,
+    navController: NavController,
 ) {
     Column(
         modifier = Modifier
@@ -101,7 +105,9 @@ private fun NewsRow(
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 20.sp,
                 color = Black,
-                modifier = Modifier.clickable { onAssetTickerClicked(news.assetTicker) }
+                modifier = Modifier.clickable {
+                    onAssetTickerClicked(news.assetTicker, navController)
+                },
             )
         }
         Spacer(modifier = Modifier.height(15.dp))

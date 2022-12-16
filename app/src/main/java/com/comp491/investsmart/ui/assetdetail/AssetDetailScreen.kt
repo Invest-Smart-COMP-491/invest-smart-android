@@ -8,7 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AssetDetailScreen() {
+fun AssetDetailScreen(
+    viewModel: AssetDetailViewModel,
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Text(text = "Asset Detail Screen", modifier = Modifier.align(Alignment.Center))
     }

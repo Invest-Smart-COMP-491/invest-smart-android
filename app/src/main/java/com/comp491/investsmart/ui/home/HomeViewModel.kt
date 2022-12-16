@@ -2,8 +2,10 @@ package com.comp491.investsmart.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.domain.news.usecases.GetAllNewsUseCase
+import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -68,7 +70,10 @@ class HomeViewModel @Inject constructor(
         }*/
     }
 
-    fun onAssetTickerClicked(assetTicker: String) {
-
+    fun onAssetTickerClicked(
+        assetTicker: String,
+        navController: NavController,
+    ) {
+        navController.navigate(NavRoute.AssetDetail.route)
     }
 }

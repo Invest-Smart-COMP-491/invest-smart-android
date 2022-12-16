@@ -14,16 +14,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.comp491.investsmart.R
 import com.comp491.investsmart.ui.common.NewsList
 import com.comp491.investsmart.ui.theme.*
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    navController: NavController,
+) {
     HomeScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         onNewsClicked = viewModel::onNewsClicked,
         onAssetTickerClicked = viewModel::onAssetTickerClicked,
+        navController = navController,
     )
 }
 
@@ -31,7 +36,8 @@ fun HomeScreen(viewModel: HomeViewModel) {
 private fun HomeScreenContent(
     uiState: HomeVMState,
     onNewsClicked: (String) -> Unit,
-    onAssetTickerClicked: (String) -> Unit,
+    onAssetTickerClicked: (String, NavController) -> Unit,
+    navController: NavController,
 ) {
     if (uiState.isLoading) {
         Box(
@@ -67,6 +73,7 @@ private fun HomeScreenContent(
                 news = uiState.news,
                 onNewsClicked = onNewsClicked,
                 onAssetTickerClicked = onAssetTickerClicked,
+                navController = navController,
             )
         }
     }
