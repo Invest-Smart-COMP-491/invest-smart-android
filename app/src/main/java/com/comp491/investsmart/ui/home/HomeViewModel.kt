@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onNewsClicked(newsIndex: Int) {
+    fun onNewsClicked(url: String) {
 
     /*
         val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + newsIndex))
@@ -66,5 +66,9 @@ class HomeViewModel @Inject constructor(
         } catch (ex: ActivityNotFoundException) {
             context.startActivity(intentBrowser)
         }*/
+    }
+
+    fun onAssetTickerClicked(assetTicker: String) {
+
     }
 }

@@ -20,14 +20,16 @@ import com.comp491.investsmart.ui.theme.montserratFamily
 @Composable
 fun NewsList(
     news: List<News>,
-    onNewsClicked: (Int) -> Unit
+    onNewsClicked: (String) -> Unit,
+    onAssetTickerClicked: (String) -> Unit,
 ) {
     LazyColumn() {
         news.forEachIndexed { index, n ->
             item {
                 NewsRow(
                     news = n,
-                    onNewsClicked = { onNewsClicked(index) },
+                    onNewsClicked = onNewsClicked,
+                    onAssetTickerClicked = onAssetTickerClicked,
                 )
             }
 
@@ -46,45 +48,61 @@ fun NewsList(
 @Composable
 private fun NewsRow(
     news: News,
-    onNewsClicked: () -> Unit,
+    onNewsClicked: (String) -> Unit,
+    onAssetTickerClicked: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 15.dp)
-            .clickable { onNewsClicked() },
+            .clickable { onNewsClicked(news.url) },
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            news.thumbnail?.let {
-                Image(
-                    painter =  rememberAsyncImagePainter(
-                        model = it,
-                        // TODO: add placeholder while loading or in case of an error.
-                    ),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(70.dp)
-                        .padding(end = 15.dp),
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                news.thumbnail?.let {
+                    Image(
+                        painter =  rememberAsyncImagePainter(
+                            model = it,
+                            // TODO: add placeholder while loading or in case of an error.
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(end = 15.dp),
+                    )
+                }
+                Column {
+                    Text(
+                        text = news.publisher,
+                        fontFamily = montserratFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp,
+                        color = Black,
+                    )
+                    Text(
+                        text = news.publishedDate,
+                        fontFamily = montserratFamily,
+                        fontWeight = FontWeight.Light,
+                        fontSize = 10.sp,
+                        color = Black,
+                    )
+                }
             }
-            Column {
-                Text(
-                    text = news.publisher,
-                    fontFamily = montserratFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
-                    color = Black,
-                )
-                Text(
-                    text = news.publishedDate.toString(),
-                    fontFamily = montserratFamily,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 10.sp,
-                    color = Black,
-                )
-            }
+
+            Text(
+                text = news.assetTicker,
+                fontFamily = montserratFamily,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 20.sp,
+                color = Black,
+                modifier = Modifier.clickable { onAssetTickerClicked(news.assetTicker) }
+            )
         }
         Spacer(modifier = Modifier.height(15.dp))
         Text(

@@ -1,14 +1,10 @@
 package com.comp491.investsmart.ui.home
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,9 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 import com.comp491.investsmart.R
-import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.ui.common.NewsList
 import com.comp491.investsmart.ui.theme.*
 
@@ -29,13 +23,15 @@ fun HomeScreen(viewModel: HomeViewModel) {
     HomeScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         onNewsClicked = viewModel::onNewsClicked,
+        onAssetTickerClicked = viewModel::onAssetTickerClicked,
     )
 }
 
 @Composable
 private fun HomeScreenContent(
     uiState: HomeVMState,
-    onNewsClicked: (Int) -> Unit,
+    onNewsClicked: (String) -> Unit,
+    onAssetTickerClicked: (String) -> Unit,
 ) {
     if (uiState.isLoading) {
         Box(
@@ -70,6 +66,7 @@ private fun HomeScreenContent(
             NewsList(
                 news = uiState.news,
                 onNewsClicked = onNewsClicked,
+                onAssetTickerClicked = onAssetTickerClicked,
             )
         }
     }
