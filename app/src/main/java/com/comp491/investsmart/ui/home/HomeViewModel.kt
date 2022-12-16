@@ -1,10 +1,14 @@
 package com.comp491.investsmart.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.comp491.investsmart.data.api.retrofit.InvestSmartService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class HomeVMState(
@@ -14,6 +18,7 @@ data class HomeVMState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val investSmartService: InvestSmartService,
 ) : ViewModel() {
 
     private val vmState = HomeVMState(
@@ -30,6 +35,16 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeVMState> = _vmState.asStateFlow()
 
     fun onNewsClicked(newsIndex: Int) {
+        viewModelScope.launch {
+            try {
+                val a = investSmartService.getNews()
+                Log.d("damla", a.toString())
+                Log.d("damla", a.body().toString())
+            } catch (e: Exception) {
+                Log.d("damla", e.toString())
+            }
+        }
+
     /*
         val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + newsIndex))
         val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=dQw4w9WgXcQ"))

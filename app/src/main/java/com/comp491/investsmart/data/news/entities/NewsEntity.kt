@@ -28,18 +28,6 @@ data class NewsEntity(
     val summary: String,
 )
 
-@Keep
-data class Post(
-    @Json(name = "id")
-    val id_: Int = 0,
-    @Json(name = "title")
-    val title: String = "",
-    @Json(name = "body")
-    val body: String = "",
-    @Json(name = "userId")
-    val userId: Int = 0
-)
-
 fun NewsEntity.toDomain(): News {
     return News(
         title = title,
