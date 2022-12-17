@@ -30,7 +30,7 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun getFavouriteAssets(): Result<List<Asset>> {
         val result =  safeApiCall {
             investSmartService.getFavouriteAssets(
-                token = dataStoreManager.token.first(),
+                token = dataStoreManager.getLatestToken(),
             )
         }
 
@@ -44,7 +44,7 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun followAsset(assetTicker: String): Result<Unit>{
         return safeApiCall {
             investSmartService.followAsset(
-                token = dataStoreManager.token.first(),
+                token = dataStoreManager.getLatestToken(),
                 assetTicker = AssetTickerEntity(assetTicker = assetTicker)
             )
         }
@@ -53,7 +53,7 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun unfollowAsset(assetTicker: String): Result<Unit> {
         return safeApiCall {
             investSmartService.unFollowAsset(
-                token = dataStoreManager.token.first(),
+                token = dataStoreManager.getLatestToken(),
                 assetTicker = AssetTickerEntity(assetTicker = assetTicker)
             )
         }

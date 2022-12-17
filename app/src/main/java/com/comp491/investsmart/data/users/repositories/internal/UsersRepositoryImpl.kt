@@ -19,7 +19,7 @@ class UsersRepositoryImpl @Inject constructor(
     override suspend fun logOut(): Result<Unit> {
         return  safeApiCall {
             investSmartService.logout(
-                token = dataStoreManager.token.first(),
+                token = dataStoreManager.getLatestToken(),
             )
         }
     }

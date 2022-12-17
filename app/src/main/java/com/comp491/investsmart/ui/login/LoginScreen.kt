@@ -144,7 +144,7 @@ private fun LoginContent(
                     text = stringResource(id = R.string.log_in_button),
                     onClick = {
                         onSignInButtonClicked(
-                            emailTextFieldValue,
+                            usernameTextFieldValue,
                             passwordTextFieldValue,
                             navController
                         )

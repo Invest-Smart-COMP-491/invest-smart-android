@@ -5,8 +5,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -45,6 +44,16 @@ class DataStoreManager @Inject constructor(
         dataStore.edit { preferences ->
             preferences[USERNAME_KEY] = username
         }
+    }
+
+    suspend fun getLatestToken(): String {
+        var latestValue = token.first()
+
+        token.take(token.count()).collectLatest {
+            latestValue = it
+        }
+
+        return latestValue
     }
 
     companion object {

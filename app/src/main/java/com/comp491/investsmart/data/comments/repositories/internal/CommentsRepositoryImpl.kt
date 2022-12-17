@@ -32,7 +32,7 @@ class CommentsRepositoryImpl @Inject constructor(
     override suspend fun addComment(addComment: AddComment): Result<Unit> {
         return safeApiCall {
             investSmartService.addComment(
-                token = dataStoreManager.token.first(),
+                token = dataStoreManager.getLatestToken(),
                 addCommentEntity = addComment.toEntity(),
             )
         }
