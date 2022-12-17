@@ -13,7 +13,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.comp491.investsmart.R
 import com.comp491.investsmart.domain.comments.entities.Comment
 import com.comp491.investsmart.ui.theme.Black
@@ -21,11 +20,10 @@ import com.comp491.investsmart.ui.theme.montserratFamily
 
 @Composable
 fun CommentsList(
-    navController: NavController? = null,
     commentListType: CommentListType,
     comments: List<Comment>,
     onLikeButtonClicked: (Int) -> Unit,
-    onAnswerButtonClicked: (Int, NavController) -> Unit = { _, _ -> },
+    onAnswerButtonClicked: (Int) -> Unit = {},
     onUsernameClicked: (Int) -> Unit = {},
     onAssetTickerClicked: (String) -> Unit = {},
 ) {
@@ -33,7 +31,6 @@ fun CommentsList(
         comments.forEachIndexed { index, comment ->
             item {
                 CommentsRow(
-                    navController = navController,
                     commentListType = commentListType,
                     comment = comment,
                     onLikeButtonClicked = onLikeButtonClicked,
@@ -57,11 +54,10 @@ fun CommentsList(
 
 @Composable
 fun CommentsRow(
-    navController: NavController?,
     commentListType: CommentListType,
     comment: Comment,
     onLikeButtonClicked: (Int) -> Unit,
-    onAnswerButtonClicked: (Int, NavController) -> Unit,
+    onAnswerButtonClicked: (Int) -> Unit,
     onUsernameClicked: (Int) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
@@ -164,9 +160,7 @@ fun CommentsRow(
                         .padding(end = 5.dp)
                         .size(20.dp)
                         .clickable {
-                            navController?.let {
-                                onAnswerButtonClicked(comment.id, navController)
-                            }
+                            onAnswerButtonClicked(comment.id)
                         }
                 )
 

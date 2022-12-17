@@ -27,8 +27,12 @@ fun HomeScreen(
     HomeScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         onNewsClicked = viewModel::onNewsClicked,
-        onAssetTickerClicked = viewModel::onAssetTickerClicked,
-        navController = navController,
+        onAssetTickerClicked = { assetTicker ->
+            viewModel.onAssetTickerClicked(
+                assetTicker = assetTicker,
+                navController = navController,
+            )
+        },
     )
 }
 
@@ -36,8 +40,7 @@ fun HomeScreen(
 private fun HomeScreenContent(
     uiState: HomeVMState,
     onNewsClicked: (String) -> Unit,
-    onAssetTickerClicked: (String, NavController) -> Unit,
-    navController: NavController,
+    onAssetTickerClicked: (String) -> Unit,
 ) {
     if (uiState.isLoading) {
         Box(
@@ -73,7 +76,6 @@ private fun HomeScreenContent(
                 news = uiState.news,
                 onNewsClicked = onNewsClicked,
                 onAssetTickerClicked = onAssetTickerClicked,
-                navController = navController,
             )
         }
     }

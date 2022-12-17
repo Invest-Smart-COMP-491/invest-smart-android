@@ -20,20 +20,23 @@ fun ProfileScreen(
     navController: NavController,
 ) {
     ProfileContent(
-        navController = navController,
         uiState = viewModel.uiState.collectAsState().value,
         onLikeButtonClicked = viewModel::onLikeButtonClicked,
-        onAnswerButtonClicked = viewModel::onAnswerButtonClicked,
+        onAnswerButtonClicked = { commentId ->
+            viewModel.onAnswerButtonClicked(
+                commentId = commentId,
+                navController = navController,
+            )
+        },
         onAssetTickerClicked = viewModel::onAssetTickerClicked,
     )
 }
 
 @Composable
 private fun ProfileContent(
-    navController: NavController,
     uiState: ProfileVMState,
     onLikeButtonClicked: (Int) -> Unit,
-    onAnswerButtonClicked: (Int, NavController) -> Unit,
+    onAnswerButtonClicked: (Int) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
     Column(
@@ -54,7 +57,6 @@ private fun ProfileContent(
         Spacer(modifier = Modifier.height(40.dp))
 
         CommentsList(
-            navController = navController,
             commentListType = CommentListType.PROFILE_PAGE,
             comments = uiState.comments,
             onLikeButtonClicked = onLikeButtonClicked,
