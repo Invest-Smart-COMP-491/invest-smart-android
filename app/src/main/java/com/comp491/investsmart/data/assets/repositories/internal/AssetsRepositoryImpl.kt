@@ -60,10 +60,26 @@ class AssetsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getAssetsWithKeyword(keyword: String): Result<List<Asset>> {
-        TODO("Not yet implemented")
+        val result =  safeApiCall {
+            investSmartService.getAssetsWithKeyword(keyword = keyword)
+        }
+
+        return if (result is Result.Success) {
+            Result.Success(data = result.data?.map { it.toDomain() }  ?: emptyList())
+        } else {
+            Result.Error(errorMessage = result.message ?: "Something went wrong")
+        }
     }
 
     override suspend fun getAssetPrices(assetTicker: String): Result<List<AssetPrice>> {
-        TODO("Not yet implemented")
+        val result =  safeApiCall {
+            investSmartService.getAssetPrices(assetTicker = assetTicker)
+        }
+
+        return if (result is Result.Success) {
+            Result.Success(data = result.data?.map { it.toDomain() }  ?: emptyList())
+        } else {
+            Result.Error(errorMessage = result.message ?: "Something went wrong")
+        }
     }
 }

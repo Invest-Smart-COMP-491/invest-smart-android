@@ -22,7 +22,7 @@ data class AssetPriceEntity(
     val volume: Double,
 )
 
-fun AssetPriceEntity.ToDomain(): AssetPrice {
+fun AssetPriceEntity.toDomain(): AssetPrice {
     return AssetPrice(
         assetName = assetName,
         assetTicker = assetTicker,

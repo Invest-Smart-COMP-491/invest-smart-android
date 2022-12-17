@@ -9,7 +9,6 @@ import com.comp491.investsmart.data.news.entities.NewsEntity
 import com.comp491.investsmart.data.users.entities.LoginUserEntity
 import com.comp491.investsmart.data.users.entities.RegisterUserEntity
 import com.comp491.investsmart.data.users.entities.TokenEntity
-import com.comp491.investsmart.domain.comments.entities.Comment
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -24,7 +23,7 @@ interface InvestSmartService {
     @GET("/api/news/{assetTicker}")
     suspend fun getAssetNews(@Query("assetTicker") assetTicker: String): Response<List<NewsEntity>>
 
-    @GET("/api/assets/{keyword}")
+    @GET("/api/assets?search={keyword}")
     suspend fun getAssetsWithKeyword(@Query("keyword") keyword: String): Response<List<AssetEntity>>
 
     @GET("/api/prices/{assetTicker}")
@@ -39,18 +38,6 @@ interface InvestSmartService {
     suspend fun addComment(
         @Header("Authorization") token: String,
         @Body addCommentEntity: AddCommentEntity,
-    ): Response<Unit>
-
-    @POST("/api/register")
-    suspend fun register(@Body user: RegisterUserEntity): Response<Unit>
-
-    @POST("/api/login")
-    suspend fun login(@Body user: LoginUserEntity): Response<TokenEntity>
-
-    @POST("/api/logout")
-    suspend fun logout(
-        @Header("Authorization") token: String,
-        @Body string: String,
     ): Response<Unit>
 
     @GET("/api/favorite")
@@ -68,5 +55,17 @@ interface InvestSmartService {
     suspend fun unFollowAsset(
         @Header("Authorization") token: String,
         @Body assetTicker: AssetTickerEntity,
+    ): Response<Unit>
+
+    @POST("/api/register")
+    suspend fun register(@Body user: RegisterUserEntity): Response<Unit>
+
+    @POST("/api/login")
+    suspend fun login(@Body user: LoginUserEntity): Response<TokenEntity>
+
+    @POST("/api/logout")
+    suspend fun logout(
+        @Header("Authorization") token: String,
+        @Body string: String,
     ): Response<Unit>
 }
