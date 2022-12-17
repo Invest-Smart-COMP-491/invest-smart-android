@@ -1,15 +1,29 @@
 package com.comp491.investsmart.ui.favourites
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.comp491.investsmart.ui.common.AssetList
 
 @Composable
-fun FavouritesScreen() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(text = "Favourites Screen", modifier = Modifier.align(Alignment.Center))
-    }
+fun FavouritesScreen(
+    viewModel: FavouritesViewModel,
+) {
+    FavouritesScreenContent(
+        uiState = viewModel.uiState.collectAsState().value,
+    )
+}
+
+@Composable
+private fun FavouritesScreenContent(
+    uiState: FavouritesVMState,
+) {
+    AssetList(
+        assets = uiState.assets,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top  = 20.dp, bottom = 60.dp),
+    )
 }

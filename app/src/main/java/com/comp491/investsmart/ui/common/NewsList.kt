@@ -23,7 +23,7 @@ fun NewsList(
     onNewsClicked: (String) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
-    LazyColumn() {
+    LazyColumn {
         news.forEachIndexed { index, n ->
             item {
                 NewsRow(

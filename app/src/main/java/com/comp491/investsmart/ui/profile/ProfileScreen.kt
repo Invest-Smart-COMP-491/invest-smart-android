@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.comp491.investsmart.ui.common.CommentListType
-import com.comp491.investsmart.ui.common.CommentsList
+import com.comp491.investsmart.ui.common.CommentList
 import com.comp491.investsmart.ui.theme.DarkGreen
 import com.comp491.investsmart.ui.theme.montserratFamily
 
@@ -56,7 +56,7 @@ private fun ProfileContent(
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        CommentsList(
+        CommentList(
             commentListType = CommentListType.PROFILE_PAGE,
             comments = uiState.comments,
             onLikeButtonClicked = onLikeButtonClicked,

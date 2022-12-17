@@ -19,7 +19,7 @@ import com.comp491.investsmart.ui.theme.Black
 import com.comp491.investsmart.ui.theme.montserratFamily
 
 @Composable
-fun CommentsList(
+fun CommentList(
     commentListType: CommentListType,
     comments: List<Comment>,
     onLikeButtonClicked: (Int) -> Unit,

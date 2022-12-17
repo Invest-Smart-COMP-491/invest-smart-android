@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comp491.investsmart.R
 import com.comp491.investsmart.ui.common.CommentListType
-import com.comp491.investsmart.ui.common.CommentsList
+import com.comp491.investsmart.ui.common.CommentList
 import com.comp491.investsmart.ui.theme.*
 
 @Composable
@@ -86,7 +86,7 @@ private fun CommentsContent(
             )
         )
 
-        CommentsList(
+        CommentList(
             commentListType = CommentListType.COMMENTS_PAGE,
             comments = uiState.comments,
             onLikeButtonClicked = onLikeButtonClicked,

@@ -16,4 +16,6 @@
     <string name="dont_have_an_account_label">Don\'t have an account?</string>
     <string name="comments_reply">Reply</string>
     <string name="comments_answer_label">Write something...</string>
+    <string name="asset_followers">%1$d followers</string>
+    <string name="asset_price">%1$s USD</string>
 </resources>

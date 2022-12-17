@@ -39,7 +39,7 @@ private fun addScreens(
     }
 
     navGraphBuilder.composable(route = NavRoute.Favourites.route) {
-        FavouritesScreen()
+        FavouritesScreen(hiltViewModel())
     }
 
     navGraphBuilder.composable(route = NavRoute.Profile.route) {
