@@ -59,15 +59,6 @@ class HomeViewModel @Inject constructor(
 
     fun onNewsClicked(url: String) {
 
-    /*
-        val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + newsIndex))
-        val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
-
-        try {
-            context.startActivity(intentApp)
-        } catch (ex: ActivityNotFoundException) {
-            context.startActivity(intentBrowser)
-        }*/
     }
 
     fun onAssetTickerClicked(
