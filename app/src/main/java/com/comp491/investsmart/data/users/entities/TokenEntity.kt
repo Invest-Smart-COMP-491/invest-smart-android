@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 import com.squareup.moshi.Json
 
 @Keep
-data class UserEntity (
-    @Json(name = "asset_name")
-    val assetName: String,
+data class TokenEntity (
+    @Json(name = "token")
+    val token: String,
 )

@@ -35,6 +35,7 @@ class LoginViewModel @Inject constructor(
         navController: NavController,
     ) {
 
+        // On Success
         navController.navigate(NavRoute.Home.route) {
             popUpTo(NavRoute.Login.route) {
                 inclusive = true
@@ -46,8 +47,9 @@ class LoginViewModel @Inject constructor(
         email: String,
         password: String,
         navController: NavController,
+    ) {
 
-        ) {
+        // On Success
         navController.navigate(NavRoute.Home.route) {
             popUpTo(NavRoute.Login.route) {
                 inclusive = true
