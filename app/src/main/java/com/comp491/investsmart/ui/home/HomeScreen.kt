@@ -146,7 +146,8 @@ private fun StockPriceCard(
             )
             Spacer(modifier = Modifier.width(25.dp))
             Text(
-                text = stringResource(id = R.string.asset_price, asset.lastPrice.toString()),
+                text = stringResource(id = R.string.asset_price,
+                        String.format("%.2f", asset.lastPrice)),
                 fontFamily = montserratFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
