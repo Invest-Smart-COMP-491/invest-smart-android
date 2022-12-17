@@ -34,6 +34,10 @@ class FavouritesViewModel @Inject constructor(
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<FavouritesVMState> = _vmState.asStateFlow()
 
+    init {
+
+    }
+
     fun onAssetClicked(
         assetTicker: String,
         navController: NavController,

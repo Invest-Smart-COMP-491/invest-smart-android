@@ -23,6 +23,9 @@ class SettingsViewModel  @Inject constructor(
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<SettingsVMState> = _vmState.asStateFlow()
 
+    init {
+
+    }
 
     fun onLogOutButtonClicked() {
         TODO("Not yet implemented")

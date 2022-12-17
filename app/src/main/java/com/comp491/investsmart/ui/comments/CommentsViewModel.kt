@@ -36,6 +36,10 @@ class CommentsViewModel @Inject constructor(
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<CommentsVMState> = _vmState.asStateFlow()
 
+    init {
+
+    }
+
     fun onLikeButtonClicked(commentId: Int) {
 
     }

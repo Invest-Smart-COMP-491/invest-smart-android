@@ -34,6 +34,10 @@ class SearchViewModel @Inject constructor(
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<SearchVMState> = _vmState.asStateFlow()
 
+    init {
+
+    }
+
     fun onSearchRequested(text: String) {
         TODO("Not yet implemented")
     }
