@@ -49,7 +49,7 @@ private fun addScreens(
     }
 
     navGraphBuilder.composable(route = NavRoute.Settings.route) {
-        SettingsScreen(hiltViewModel())
+        SettingsScreen(hiltViewModel(), navController)
     }
 
     navGraphBuilder.composable(route = NavRoute.Login.route) {

@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.comp491.investsmart.R
 import com.comp491.investsmart.ui.theme.Black
 import com.comp491.investsmart.ui.theme.DarkGreen
@@ -17,11 +18,15 @@ import com.comp491.investsmart.ui.theme.Gray
 import com.comp491.investsmart.ui.theme.montserratFamily
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel) {
+fun SettingsScreen(
+    viewModel: SettingsViewModel,
+    navController: NavController,
+) {
     SettingsScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         onChangePasswordButtonClicked = viewModel::onChangePasswordButtonClicked,
         onLogOutButtonClicked = viewModel::onLogOutButtonClicked,
+        navController = navController,
     )
 }
 
@@ -29,7 +34,8 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
 private fun SettingsScreenContent(
     uiState: SettingsVMState,
     onChangePasswordButtonClicked: () -> Unit,
-    onLogOutButtonClicked: () -> Unit,
+    onLogOutButtonClicked: (NavController) -> Unit,
+    navController: NavController,
 ) {
     Column(
         modifier = Modifier
@@ -56,7 +62,9 @@ private fun SettingsScreenContent(
 */
         LogOutButton(
             text = stringResource(id = R.string.log_out_button),
-            onClick = onLogOutButtonClicked,
+            onClick = {
+                onLogOutButtonClicked(navController)
+            },
         )
     }
 }

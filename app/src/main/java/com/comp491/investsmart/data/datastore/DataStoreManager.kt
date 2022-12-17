@@ -49,11 +49,11 @@ class DataStoreManager @Inject constructor(
     suspend fun getLatestToken(): String {
         var latestValue = token.first()
 
-        token.take(token.count()).collectLatest {
-            latestValue = it
-        }
+//        token.take(token.count()).collectLatest {
+//            latestValue = it
+//        }
 
-        return latestValue
+        return "Token $latestValue"
     }
 
     companion object {

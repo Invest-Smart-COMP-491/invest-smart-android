@@ -11,6 +11,7 @@ sealed class Result<T>(
     val message: String? = null
 ) {
     class Success<T>(data: T) : Result<T>(data = data)
+    class SuccessWithoutBody<T>() : Result<T>()
 
     class Error<T>(errorMessage: String) : Result<T>(message = errorMessage)
 }
@@ -21,8 +22,12 @@ suspend fun <T> safeApiCall(apiToBeCalled: suspend () -> Response<T>): Result<T>
             val response: Response<T> = apiToBeCalled()
 
             if (response.isSuccessful) {
-                Result.Success(data = response.body()!!)
-            } else {
+                if(response.body() == null){
+                    Result.SuccessWithoutBody()
+                }else{
+                    Result.Success(data = response.body()!!)
+                }
+            }else {
                 Result.Error("Something went wrong")
             }
 
