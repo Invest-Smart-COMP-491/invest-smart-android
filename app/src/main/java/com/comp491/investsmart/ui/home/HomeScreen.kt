@@ -1,5 +1,6 @@
 package com.comp491.investsmart.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.comp491.investsmart.R
+import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.ui.common.NewsList
 import com.comp491.investsmart.ui.theme.*
 
@@ -27,8 +29,8 @@ fun HomeScreen(
     HomeScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         onNewsClicked = viewModel::onNewsClicked,
-        onAssetTickerClicked = { assetTicker ->
-            viewModel.onAssetTickerClicked(
+        onAssetClicked = { assetTicker ->
+            viewModel.onAssetClicked(
                 assetTicker = assetTicker,
                 navController = navController,
             )
@@ -40,7 +42,7 @@ fun HomeScreen(
 private fun HomeScreenContent(
     uiState: HomeVMState,
     onNewsClicked: (String) -> Unit,
-    onAssetTickerClicked: (String) -> Unit,
+    onAssetClicked: (String) -> Unit,
 ) {
     if (uiState.isLoading) {
         Box(
@@ -59,8 +61,9 @@ private fun HomeScreenContent(
                 .fillMaxSize()
                 .padding(bottom = 60.dp),
         ) {
-            StockPricesList(
-                stockPrices = uiState.stockPrices,
+            TrendingAssetsList(
+                trendingAssets = uiState.trendingAssets,
+                onAssetClicked = onAssetClicked,
             )
 
             Text(
@@ -75,15 +78,16 @@ private fun HomeScreenContent(
             NewsList(
                 news = uiState.news,
                 onNewsClicked = onNewsClicked,
-                onAssetTickerClicked = onAssetTickerClicked,
+                onAssetTickerClicked = onAssetClicked,
             )
         }
     }
 }
 
 @Composable
-private fun StockPricesList(
-    stockPrices: List<Pair<String, Double>>,
+private fun TrendingAssetsList(
+    trendingAssets: List<Asset>,
+    onAssetClicked: (String) -> Unit,
 ) {
     LazyRow(
         modifier = Modifier
@@ -91,13 +95,13 @@ private fun StockPricesList(
             .padding(vertical = 25.dp),
         horizontalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-        stockPrices.forEachIndexed { index, pair ->
+        trendingAssets.forEachIndexed { index, asset ->
             item {
                 StockPriceCard(
-                    name = pair.first,
-                    price = pair.second,
+                    asset = asset,
                     isFirst = index == 0,
-                    isLast = index == stockPrices.size - 1,
+                    isLast = index == trendingAssets.size - 1,
+                    onAssetClicked = onAssetClicked,
                 )
             }
         }
@@ -106,10 +110,10 @@ private fun StockPricesList(
 
 @Composable
 private fun StockPriceCard(
-    name: String,
-    price: Double,
+    asset: Asset,
     isFirst: Boolean,
     isLast: Boolean,
+    onAssetClicked: (String) -> Unit,
 ) {
     Card(
         modifier = Modifier.padding(
@@ -123,7 +127,9 @@ private fun StockPriceCard(
             } else {
                 0.dp
             }
-        ),
+        ).clickable {
+            onAssetClicked(asset.assetTicker)
+        },
         elevation = 5.dp,
         shape = RoundedCornerShape(8.dp),
     ) {
@@ -132,7 +138,7 @@ private fun StockPriceCard(
                 .padding(horizontal = 9.dp, vertical = 7.dp)
         ) {
             Text(
-                text = name,
+                text = asset.assetName,
                 fontFamily = montserratFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
@@ -140,19 +146,10 @@ private fun StockPriceCard(
             )
             Spacer(modifier = Modifier.width(25.dp))
             Text(
-                text = if (price > 0) {
-                    "+$price%"
-                } else {
-                    "$price%"
-                },
+                text = stringResource(id = R.string.asset_price, asset.lastPrice.toString()),
                 fontFamily = montserratFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
-                color = if(price >= 0) {
-                    PriceGreen
-                } else {
-                    PriceRed
-                },
             )
         }
     }
