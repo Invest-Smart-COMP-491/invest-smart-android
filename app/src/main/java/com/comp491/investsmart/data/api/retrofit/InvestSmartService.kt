@@ -58,14 +58,11 @@ interface InvestSmartService {
     ): Response<Unit>
 
     @POST("/api/register")
-    suspend fun register(@Body user: RegisterUserEntity): Response<Unit>
+    suspend fun register(@Body user: RegisterUserEntity): Response<TokenEntity>
 
     @POST("/api/login")
     suspend fun login(@Body user: LoginUserEntity): Response<TokenEntity>
 
     @POST("/api/logout")
-    suspend fun logout(
-        @Header("Authorization") token: String,
-        @Body string: String,
-    ): Response<Unit>
+    suspend fun logout(@Header("Authorization") token: String): Response<Unit>
 }
