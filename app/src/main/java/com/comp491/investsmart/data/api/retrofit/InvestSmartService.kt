@@ -3,9 +3,11 @@ package com.comp491.investsmart.data.api.retrofit
 import com.comp491.investsmart.data.assets.entities.AssetEntity
 import com.comp491.investsmart.data.assets.entities.AssetPriceEntity
 import com.comp491.investsmart.data.assets.entities.AssetTickerEntity
+import com.comp491.investsmart.data.comments.entities.AddCommentEntity
 import com.comp491.investsmart.data.news.entities.NewsEntity
 import com.comp491.investsmart.data.users.entities.LoginUserEntity
 import com.comp491.investsmart.data.users.entities.RegisterUserEntity
+import com.comp491.investsmart.data.users.entities.TokenEntity
 import com.comp491.investsmart.domain.comments.entities.Comment
 import retrofit2.Response
 import retrofit2.http.*
@@ -32,11 +34,17 @@ interface InvestSmartService {
     suspend fun getAssetComments(@Query("assetTicker") assetTicker: String):
             Response<List<Comment>>
 
+    @POST("/api/comments/")
+    suspend fun addComment(
+        @Header("Authorization") token: String,
+        @Body addCommentEntity: AddCommentEntity,
+    ): Response<Unit>
+
     @POST("/api/register")
     suspend fun register(@Body user: RegisterUserEntity): Response<Unit>
 
     @POST("/api/login")
-    suspend fun login(@Body user: LoginUserEntity): Response<Unit>
+    suspend fun login(@Body user: LoginUserEntity): Response<TokenEntity>
 
     @POST("/api/logout")
     suspend fun logout(

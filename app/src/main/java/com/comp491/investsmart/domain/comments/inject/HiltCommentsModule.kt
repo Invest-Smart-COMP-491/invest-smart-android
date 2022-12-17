@@ -1,6 +1,8 @@
 package com.comp491.investsmart.domain.comments.inject
 
+import com.comp491.investsmart.domain.comments.usecases.AddCommentUseCase
 import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
+import com.comp491.investsmart.domain.comments.usecases.internal.AddCommentUseCaseImpl
 import com.comp491.investsmart.domain.comments.usecases.internal.GetAssetCommentsUseCaseImpl
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,9 @@ abstract class HiltCommentsModule {
     abstract fun bindGetAssetCommentsUseCase(
         getAssetCommentsUseCaseImpl: GetAssetCommentsUseCaseImpl
     ): GetAssetCommentsUseCase
+
+    @Binds
+    abstract fun bindAddCommentUseCase(
+        addCommentUseCaseImpl: AddCommentUseCaseImpl
+    ): AddCommentUseCase
 }

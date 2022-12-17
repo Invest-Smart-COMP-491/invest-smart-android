@@ -3,6 +3,7 @@ package com.comp491.investsmart.ui.assetdetail
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,5 +37,17 @@ class AssetDetailViewModel @Inject constructor(
 
     init {
         Log.d("damla", savedStateHandle.get<String>(NavRoute.AssetDetail.assetTicker).toString())
+    }
+
+    fun onNewsClicked(url: String) {
+
+    }
+
+    fun onAnswerButtonClicked(commentId: Int, navController: NavController) {
+        navController.navigate(NavRoute.Comments.withArgs(commentId.toString()))
+    }
+
+    fun onLikeButtonClicked(commentId: Int) {
+
     }
 }
