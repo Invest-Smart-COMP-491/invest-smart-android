@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -95,10 +96,23 @@ private fun SearchScreenContent(
             )
         )
 
-        AssetList(
-            assets = uiState.assets,
-            onAssetClicked = onAssetClicked,
-            modifier = Modifier.padding(top = 20.dp, bottom = 60.dp),
-        )
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(40.dp),
+                    color = LightBlue,
+                    strokeWidth = 5.dp
+                )
+            }
+        } else {
+            AssetList(
+                assets = uiState.assets,
+                onAssetClicked = onAssetClicked,
+                modifier = Modifier.padding(top = 20.dp, bottom = 60.dp),
+            )
+        }
     }
 }

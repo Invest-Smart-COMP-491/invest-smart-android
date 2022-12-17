@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 data class SearchVMState(
     val assets: List<Asset>,
+    val isLoading: Boolean,
 )
 
 @HiltViewModel
@@ -19,7 +20,8 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val vmState = SearchVMState(
-        assets = emptyList()
+        assets = emptyList(),
+        isLoading = false,
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<SearchVMState> = _vmState.asStateFlow()
@@ -27,7 +29,7 @@ class SearchViewModel @Inject constructor(
     init {}
 
     fun onSearchRequested(text: String) {
-        TODO("Not yet implemented")
+        TODO("Not yet implemented, don't forget isLoading")
     }
 
     fun onAssetClicked(
