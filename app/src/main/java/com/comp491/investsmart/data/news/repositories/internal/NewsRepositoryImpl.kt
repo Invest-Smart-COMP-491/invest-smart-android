@@ -22,7 +22,13 @@ class NewsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAssetNews(assetTicker: String): List<News> {
-        TODO("Not yet implemented")
+    override suspend fun getAssetNews(assetTicker: String): Result<List<News>> {
+        val result = safeApiCall { investSmartService.getAssetNews(assetTicker = assetTicker) }
+
+        return if (result is Result.Success) {
+            Result.Success(data = result.data?.map { it.toDomain() }  ?: emptyList())
+        } else {
+            Result.Error(errorMessage = result.message ?: "Something went wrong")
+        }
     }
 }
