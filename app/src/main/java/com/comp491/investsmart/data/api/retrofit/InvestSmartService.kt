@@ -57,12 +57,12 @@ interface InvestSmartService {
         @Body assetTicker: AssetTickerEntity,
     ): Response<Unit>
 
-    @POST("/api/register")
+    @POST("/api/register/")
     suspend fun register(@Body user: RegisterUserEntity): Response<TokenEntity>
 
-    @POST("/api/login")
+    @POST("/api/login/")
     suspend fun login(@Body user: LoginUserEntity): Response<TokenEntity>
 
-    @POST("/api/logout")
+    @POST("/api/logout/")
     suspend fun logout(@Header("Authorization") token: String): Response<Unit>
 }
