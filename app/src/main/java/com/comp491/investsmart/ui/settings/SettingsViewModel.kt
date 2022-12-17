@@ -17,14 +17,17 @@ class SettingsViewModel  @Inject constructor(
 ) : ViewModel() {
 
     private val vmState = SettingsVMState(
-        username = "bo_burnham",
-        email = "bo_burnham@gmail.com"
+        username = "",
+        email = ""
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<SettingsVMState> = _vmState.asStateFlow()
 
     init {
-
+        _vmState.value = SettingsVMState(
+            username = "",
+            email = ""
+        )
     }
 
     fun onLogOutButtonClicked() {

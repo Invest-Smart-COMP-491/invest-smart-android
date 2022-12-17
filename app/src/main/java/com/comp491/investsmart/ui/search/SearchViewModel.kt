@@ -19,24 +19,12 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val vmState = SearchVMState(
-        assets = List(20) {
-            Asset(
-                assetName = "META",
-                assetTicker = "FB",
-                lastPrice = 3.14,
-                assetCategory = "Tech",
-                viewCount = 12,
-                photoUrl = "https://picsum.photos/200",
-                marketSize = 200.0,
-            )
-        },
+        assets = emptyList()
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<SearchVMState> = _vmState.asStateFlow()
 
-    init {
-
-    }
+    init {}
 
     fun onSearchRequested(text: String) {
         TODO("Not yet implemented")

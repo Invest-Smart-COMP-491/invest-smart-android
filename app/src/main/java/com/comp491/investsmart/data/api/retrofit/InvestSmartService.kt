@@ -5,6 +5,7 @@ import com.comp491.investsmart.data.assets.entities.AssetPriceEntity
 import com.comp491.investsmart.data.news.entities.NewsEntity
 import com.comp491.investsmart.domain.comments.entities.Comment
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -14,11 +15,11 @@ interface InvestSmartService {
     @GET("/api/trending-stocks/news")
     suspend fun getNews(): Response<List<NewsEntity>>
 
-    @GET("/api/news/{assetTicker}")
-    suspend fun getAssetNews(@Query("assetTicker") assetTicker: String): Response<List<NewsEntity>>
-
     @GET("/api/trending-stocks/")
     suspend fun getTrendingAssets(): Response<List<AssetEntity>>
+
+    @GET("/api/news/{assetTicker}")
+    suspend fun getAssetNews(@Query("assetTicker") assetTicker: String): Response<List<NewsEntity>>
 
     @GET("/api/assets/{keyword}")
     suspend fun getAssetsWithKeyword(@Query("keyword") keyword: String): Response<List<AssetEntity>>
@@ -33,4 +34,13 @@ interface InvestSmartService {
     @GET("/api/comments/{assetTicker}")
     suspend fun getAssetComments(@Query("assetTicker") assetTicker: String):
             Response<List<Comment>>
+
+    @POST("/api/register")
+    suspend fun register(@Body string: String): Response<Unit>
+
+    @POST("/api/login")
+    suspend fun login(@Body string: String): Response<Unit>
+
+    @POST("/api/logout")
+    suspend fun logout(@Body string: String): Response<Unit>
 }

@@ -58,7 +58,7 @@ private fun addScreens(
 
     navGraphBuilder.composable(
         route = NavRoute.Comments.withArgsFormat(NavRoute.Comments.commentId),
-        arguments = listOf(navArgument("comment_id") { type = NavType.IntType }),
+        arguments = listOf(navArgument("comment_id") { type = NavType.StringType }),
     ) {
         CommentsScreen(hiltViewModel())
     }

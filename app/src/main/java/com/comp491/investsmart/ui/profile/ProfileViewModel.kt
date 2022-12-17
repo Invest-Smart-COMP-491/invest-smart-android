@@ -21,26 +21,33 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val vmState = ProfileVMState(
-        comments = List(20) {
-            Comment(
-                id = 0,
-                username = "cinnamon",
-                userId = 12,
-                assetTicker = "DAMY",
-                text = "Ah, a functional programmer. Inheritance is messy anyway.",
-                date = "23.06.2021",
-                likeCount = 10,
-                importedFrom = "",
-                answerCount = 5,
-            )
-        },
-        username = "cinnamon",
+        comments = emptyList(),
+        username = "",
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<ProfileVMState> = _vmState.asStateFlow()
 
+    init {
+        _vmState.value = ProfileVMState(
+            comments = List(20) {
+                Comment(
+                    id = 0,
+                    username = "cinnamon",
+                    userId = 12,
+                    assetTicker = "DAMY",
+                    text = "Ah, a functional programmer. Inheritance is messy anyway.",
+                    date = "23.06.2021",
+                    likeCount = 10,
+                    importedFrom = "",
+                    answerCount = 5,
+                )
+            },
+            username = "cinnamon",
+        )
+    }
+
     fun onAnswerButtonClicked(commentId: Int, navController: NavController) {
-        navController.navigate(NavRoute.Comments.route)
+        navController.navigate(NavRoute.Comments.withArgs(commentId.toString()))
     }
 
     fun onLikeButtonClicked(commentId: Int) {
