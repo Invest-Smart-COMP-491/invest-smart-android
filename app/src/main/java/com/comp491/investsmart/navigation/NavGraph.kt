@@ -5,8 +5,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.comp491.investsmart.ui.home.HomeScreen
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.comp491.investsmart.ui.assetdetail.AssetDetailScreen
 import com.comp491.investsmart.ui.comments.CommentsScreen
 import com.comp491.investsmart.ui.favourites.FavouritesScreen
@@ -54,11 +56,17 @@ private fun addScreens(
         LoginScreen(hiltViewModel(), navController)
     }
 
-    navGraphBuilder.composable(route = NavRoute.Comments.route) {
+    navGraphBuilder.composable(
+        route = NavRoute.Comments.withArgsFormat(NavRoute.Comments.commentId),
+        arguments = listOf(navArgument("comment_id") { type = NavType.IntType }),
+    ) {
         CommentsScreen(hiltViewModel())
     }
 
-    navGraphBuilder.composable(route = NavRoute.AssetDetail.route) {
-        AssetDetailScreen(hiltViewModel())
+    navGraphBuilder.composable(
+        route = NavRoute.AssetDetail.withArgsFormat(NavRoute.AssetDetail.assetTicker),
+        arguments = listOf(navArgument("asset_ticker") { type = NavType.StringType }),
+    ) {
+        AssetDetailScreen(hiltViewModel(), navController)
     }
 }

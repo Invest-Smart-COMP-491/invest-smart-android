@@ -14,9 +14,13 @@ sealed class NavRoute(val route: String) {
 
     object Login: NavRoute("login")
 
-    object Comments: NavRoute("comments")
+    object Comments: NavRoute("comments") {
+        const val commentId = "comment_id"
+    }
 
-    object AssetDetail: NavRoute("asset_detail")
+    object AssetDetail: NavRoute("asset_detail") {
+        const val assetTicker = "asset_ticker"
+    }
 
     fun withArgs(vararg args: String): String {
         return buildString {
