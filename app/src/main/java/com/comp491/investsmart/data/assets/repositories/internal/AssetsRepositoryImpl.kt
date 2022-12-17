@@ -41,9 +41,8 @@ class AssetsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun followAsset(assetTicker: String) {
-        // Currently this is failing silently, will we show an error dialog?
-        safeApiCall {
+    override suspend fun followAsset(assetTicker: String): Result<Unit>{
+        return safeApiCall {
             investSmartService.followAsset(
                 token = dataStoreManager.token.first(),
                 assetTicker = AssetTickerEntity(assetTicker = assetTicker)
@@ -51,9 +50,8 @@ class AssetsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun unfollowAsset(assetTicker: String) {
-        // Currently this is failing silently, will we show an error dialog?
-        safeApiCall {
+    override suspend fun unfollowAsset(assetTicker: String): Result<Unit> {
+        return safeApiCall {
             investSmartService.unFollowAsset(
                 token = dataStoreManager.token.first(),
                 assetTicker = AssetTickerEntity(assetTicker = assetTicker)

@@ -10,6 +10,6 @@ interface AssetsRepository {
     suspend fun getAssetsWithKeyword(keyword: String): Result<List<Asset>>
     suspend fun getAssetPrices(assetTicker: String): Result<List<AssetPrice>>
     suspend fun getFavouriteAssets():Result<List<Asset>>
-    suspend fun followAsset(assetTicker: String)
-    suspend fun unfollowAsset(assetTicker: String)
+    suspend fun followAsset(assetTicker: String): Result<Unit>
+    suspend fun unfollowAsset(assetTicker: String): Result<Unit>
 }

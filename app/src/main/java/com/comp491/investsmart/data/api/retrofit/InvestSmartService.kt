@@ -4,6 +4,7 @@ import com.comp491.investsmart.data.assets.entities.AssetEntity
 import com.comp491.investsmart.data.assets.entities.AssetPriceEntity
 import com.comp491.investsmart.data.assets.entities.AssetTickerEntity
 import com.comp491.investsmart.data.comments.entities.AddCommentEntity
+import com.comp491.investsmart.data.comments.entities.CommentEntity
 import com.comp491.investsmart.data.news.entities.NewsEntity
 import com.comp491.investsmart.data.users.entities.LoginUserEntity
 import com.comp491.investsmart.data.users.entities.RegisterUserEntity
@@ -32,7 +33,7 @@ interface InvestSmartService {
 
     @GET("/api/comments/{assetTicker}")
     suspend fun getAssetComments(@Query("assetTicker") assetTicker: String):
-            Response<List<Comment>>
+            Response<List<CommentEntity>>
 
     @POST("/api/comments/")
     suspend fun addComment(
@@ -61,11 +62,11 @@ interface InvestSmartService {
     suspend fun followAsset(
         @Header("Authorization") token: String,
         @Body assetTicker: AssetTickerEntity,
-    ): Response<List<AssetEntity>>
+    ): Response<Unit>
 
     @DELETE("/api/favorite")
     suspend fun unFollowAsset(
         @Header("Authorization") token: String,
         @Body assetTicker: AssetTickerEntity,
-    ): Response<List<AssetEntity>>
+    ): Response<Unit>
 }
