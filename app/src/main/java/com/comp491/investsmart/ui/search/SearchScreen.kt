@@ -15,20 +15,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.comp491.investsmart.R
+import com.comp491.investsmart.ui.common.AssetList
 import com.comp491.investsmart.ui.theme.*
 
 @Composable
-fun SearchScreen(viewModel: SearchViewModel) {
+fun SearchScreen(
+    viewModel: SearchViewModel,
+    navController: NavController,
+) {
     SearchScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
         onSearchRequested = viewModel::onSearchRequested,
+        onAssetClicked = { assetTicker ->
+            viewModel.onAssetClicked(
+                assetTicker = assetTicker,
+                navController = navController,
+            )
+        },
     )
 }
 
 @Composable
 private fun SearchScreenContent(
     uiState: SearchVMState,
+    onAssetClicked: (String) -> Unit,
     onSearchRequested: (String) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
@@ -81,6 +93,12 @@ private fun SearchScreenContent(
                     focusManager.clearFocus()
                 }
             )
+        )
+
+        AssetList(
+            assets = uiState.assets,
+            onAssetClicked = onAssetClicked,
+            modifier = Modifier.padding(top = 20.dp, bottom = 60.dp),
         )
     }
 }

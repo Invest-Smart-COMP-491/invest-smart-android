@@ -1,6 +1,7 @@
 package com.comp491.investsmart.ui.common
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
@@ -20,6 +21,7 @@ import com.comp491.investsmart.R
 @Composable
 fun AssetList(
     assets: List<Asset>,
+    onAssetClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -30,6 +32,7 @@ fun AssetList(
             item {
                 AssetRow(
                     asset = asset,
+                    onAssetClicked = onAssetClicked,
                 )
             }
         }
@@ -39,9 +42,12 @@ fun AssetList(
 @Composable
 private fun AssetRow(
     asset: Asset,
+    onAssetClicked: (String) -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onAssetClicked(asset.assetTicker) },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {

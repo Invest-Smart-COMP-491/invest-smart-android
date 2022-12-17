@@ -6,6 +6,7 @@ import com.comp491.investsmart.data.news.entities.NewsEntity
 import com.comp491.investsmart.domain.comments.entities.Comment
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface InvestSmartService {

@@ -1,7 +1,9 @@
 package com.comp491.investsmart.ui.favourites
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.comp491.investsmart.domain.assets.entities.Asset
+import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,4 +33,11 @@ class FavouritesViewModel @Inject constructor(
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<FavouritesVMState> = _vmState.asStateFlow()
+
+    fun onAssetClicked(
+        assetTicker: String,
+        navController: NavController,
+    ) {
+        navController.navigate(NavRoute.AssetDetail.route)
+    }
 }

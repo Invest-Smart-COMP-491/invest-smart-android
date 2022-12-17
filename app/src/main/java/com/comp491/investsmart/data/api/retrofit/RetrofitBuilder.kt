@@ -10,7 +10,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 object RetrofitBuilder {
 
     private var retrofit: Retrofit? = null

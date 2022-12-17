@@ -35,11 +35,11 @@ private fun addScreens(
     }
 
     navGraphBuilder.composable(route = NavRoute.Search.route) {
-        SearchScreen(hiltViewModel())
+        SearchScreen(hiltViewModel(), navController)
     }
 
     navGraphBuilder.composable(route = NavRoute.Favourites.route) {
-        FavouritesScreen(hiltViewModel())
+        FavouritesScreen(hiltViewModel(), navController)
     }
 
     navGraphBuilder.composable(route = NavRoute.Profile.route) {
