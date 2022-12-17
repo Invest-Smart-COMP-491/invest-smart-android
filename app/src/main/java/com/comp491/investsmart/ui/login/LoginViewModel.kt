@@ -1,12 +1,17 @@
 package com.comp491.investsmart.ui.login
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.comp491.investsmart.domain.users.usecases.SignInUseCase
+import com.comp491.investsmart.domain.users.usecases.SignUpUseCase
+import com.comp491.investsmart.data.api.Result
 import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 enum class LoginType {
@@ -20,6 +25,8 @@ data class LoginVMState(
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val signUpUseCase: SignUpUseCase,
+    private val signInUseCase: SignInUseCase,
 ) : ViewModel() {
 
     private val vmState = LoginVMState(
@@ -34,25 +41,45 @@ class LoginViewModel @Inject constructor(
         password: String,
         navController: NavController,
     ) {
+        viewModelScope.launch {
+            val result = signUpUseCase(
+                username = username,
+                email = email,
+                password = password,
+            )
 
-        // On Success
-        navController.navigate(NavRoute.Home.route) {
-            popUpTo(NavRoute.Login.route) {
-                inclusive = true
+            if (result is Result.Success) {
+                navController.navigate(NavRoute.Home.route) {
+                    popUpTo(NavRoute.Login.route) {
+                        inclusive = true
+                    }
+                }
+            } else {
+                // TODO: show an error dialog.
             }
         }
     }
 
     fun onSignInButtonClicked(
-        email: String,
+        username: String,
         password: String,
         navController: NavController,
     ) {
 
-        // On Success
-        navController.navigate(NavRoute.Home.route) {
-            popUpTo(NavRoute.Login.route) {
-                inclusive = true
+        viewModelScope.launch {
+            val result = signInUseCase(
+                username = username,
+                password = password,
+            )
+
+            if (result is Result.Success) {
+                navController.navigate(NavRoute.Home.route) {
+                    popUpTo(NavRoute.Login.route) {
+                        inclusive = true
+                    }
+                }
+            } else {
+                // TODO: show an error dialog.
             }
         }
     }

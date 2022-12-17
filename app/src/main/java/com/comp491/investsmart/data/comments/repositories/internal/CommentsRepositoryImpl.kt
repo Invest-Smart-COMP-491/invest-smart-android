@@ -9,7 +9,6 @@ import com.comp491.investsmart.domain.comments.entities.AddComment
 import com.comp491.investsmart.domain.comments.entities.Comment
 import com.comp491.investsmart.domain.comments.entities.toEntity
 import com.comp491.investsmart.domain.comments.repositories.CommentsRepository
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class CommentsRepositoryImpl @Inject constructor(
@@ -32,7 +31,7 @@ class CommentsRepositoryImpl @Inject constructor(
     override suspend fun addComment(addComment: AddComment): Result<Unit> {
         return safeApiCall {
             investSmartService.addComment(
-                token = dataStoreManager.token.first(),
+                token = dataStoreManager.getLatestToken(),
                 addCommentEntity = addComment.toEntity(),
             )
         }

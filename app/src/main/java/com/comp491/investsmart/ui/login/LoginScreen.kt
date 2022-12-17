@@ -66,45 +66,45 @@ private fun LoginContent(
                 .size(100.dp)
         )
 
-        if (uiState.loginType == LoginType.SIGN_UP) {
-            LoginTextField(
-                focusManager = focusManager,
-                label = {
-                    Text(
-                        text = stringResource(id = R.string.username_label),
-                        fontFamily = montserratFamily,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        color = Gray,
-                    )
-                },
-                value = usernameTextFieldValue,
-                onValueChange = { newValue ->
-                    usernameTextFieldValue = newValue
-                }
-            )
-
-            Spacer(modifier = Modifier.height(15.dp))
-        }
-
         LoginTextField(
             focusManager = focusManager,
             label = {
                 Text(
-                    text = stringResource(id = R.string.email_label),
+                    text = stringResource(id = R.string.username_label),
                     fontFamily = montserratFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,
                     color = Gray,
                 )
             },
-            value = emailTextFieldValue,
+            value = usernameTextFieldValue,
             onValueChange = { newValue ->
-                emailTextFieldValue = newValue
+                usernameTextFieldValue = newValue
             }
         )
 
         Spacer(modifier = Modifier.height(15.dp))
+
+        if (uiState.loginType == LoginType.SIGN_UP) {
+            LoginTextField(
+                focusManager = focusManager,
+                label = {
+                    Text(
+                        text = stringResource(id = R.string.email_label),
+                        fontFamily = montserratFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        color = Gray,
+                    )
+                },
+                value = emailTextFieldValue,
+                onValueChange = { newValue ->
+                    emailTextFieldValue = newValue
+                }
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
+        }
 
         LoginTextField(
             focusManager = focusManager,
@@ -144,7 +144,7 @@ private fun LoginContent(
                     text = stringResource(id = R.string.log_in_button),
                     onClick = {
                         onSignInButtonClicked(
-                            emailTextFieldValue,
+                            usernameTextFieldValue,
                             passwordTextFieldValue,
                             navController
                         )
