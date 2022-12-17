@@ -4,7 +4,6 @@ import com.comp491.investsmart.data.datastore.DataStoreManager
 import com.comp491.investsmart.domain.users.entities.UserInfoType
 import com.comp491.investsmart.domain.users.usecases.GetUserInfoUseCase
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import javax.inject.Inject
 
 class GetUserInfoUseCaseImpl @Inject constructor(
