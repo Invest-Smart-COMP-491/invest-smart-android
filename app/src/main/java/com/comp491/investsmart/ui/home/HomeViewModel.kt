@@ -74,6 +74,6 @@ class HomeViewModel @Inject constructor(
         assetTicker: String,
         navController: NavController,
     ) {
-        navController.navigate(NavRoute.AssetDetail.route)
+        navController.navigate(NavRoute.AssetDetail.withArgs(assetTicker))
     }
 }

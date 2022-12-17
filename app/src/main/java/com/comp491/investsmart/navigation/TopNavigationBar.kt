@@ -19,7 +19,8 @@ fun TopNavigationBar(navController: NavController) {
     val currentRoute: String? = navBackStackEntry?.destination?.route
     val routesToShowBackButton = listOf(
         NavRoute.Settings.route,
-        NavRoute.Comments.route,
+        NavRoute.Comments.withArgsFormat(NavRoute.Comments.commentId),
+        NavRoute.AssetDetail.withArgsFormat(NavRoute.AssetDetail.assetTicker),
     )
     val routesToShowSettingsIcon = listOf(
         NavRoute.Home.route,
