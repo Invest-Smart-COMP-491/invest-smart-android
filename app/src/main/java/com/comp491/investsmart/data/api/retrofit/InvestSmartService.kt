@@ -2,6 +2,7 @@ package com.comp491.investsmart.data.api.retrofit
 
 import com.comp491.investsmart.data.assets.entities.AssetEntity
 import com.comp491.investsmart.data.assets.entities.AssetPriceEntity
+import com.comp491.investsmart.data.assets.entities.AssetTickerEntity
 import com.comp491.investsmart.data.news.entities.NewsEntity
 import com.comp491.investsmart.data.users.entities.LoginUserEntity
 import com.comp491.investsmart.data.users.entities.RegisterUserEntity
@@ -23,11 +24,6 @@ interface InvestSmartService {
     @GET("/api/assets/{keyword}")
     suspend fun getAssetsWithKeyword(@Query("keyword") keyword: String): Response<List<AssetEntity>>
 
-    @GET("/api/assets/favorite")
-    suspend fun getFavouriteAssets(
-        @Header("Authorization") token: String
-    ): Response<List<AssetEntity>>
-
     @GET("/api/prices/{assetTicker}")
     suspend fun getAssetPrices(@Query("assetTicker") assetTicker: String):
             Response<List<AssetPriceEntity>>
@@ -47,4 +43,21 @@ interface InvestSmartService {
         @Header("Authorization") token: String,
         @Body string: String,
     ): Response<Unit>
+
+    @GET("/api/favorite")
+    suspend fun getFavouriteAssets(
+        @Header("Authorization") token: String
+    ): Response<List<AssetEntity>>
+
+    @POST("/api/favorite")
+    suspend fun followAsset(
+        @Header("Authorization") token: String,
+        @Body assetTicker: AssetTickerEntity,
+    ): Response<List<AssetEntity>>
+
+    @DELETE("/api/favorite")
+    suspend fun unFollowAsset(
+        @Header("Authorization") token: String,
+        @Body assetTicker: AssetTickerEntity,
+    ): Response<List<AssetEntity>>
 }
