@@ -18,7 +18,7 @@ abstract class HiltAssetsModule {
 
     @Binds
     abstract fun bindGetFavouriteAssetsUseCase(
-        getAllFavouriteAssetsUseCaseImpl: GetAllFavouriteAssetsUseCaseImpl
+        getFavouriteAssetsUseCaseImpl: GetFavouriteAssetsUseCaseImpl
     ): GetFavouriteAssetsUseCase
 
     @Binds
@@ -30,4 +30,9 @@ abstract class HiltAssetsModule {
     abstract fun bindGetAssetsWithKeywordUseCase(
         getAssetsWithKeywordUseCaseImpl: GetAssetsWithKeywordUseCaseImpl
     ): GetAssetsWithKeywordUseCase
+
+    @Binds
+    abstract fun bindFollowUnfollowAssetUseCase(
+        followUnfollowAssetUseCaseImpl: FollowUnfollowAssetUseCaseImpl
+    ): FollowUnfollowAssetUseCase
 }
