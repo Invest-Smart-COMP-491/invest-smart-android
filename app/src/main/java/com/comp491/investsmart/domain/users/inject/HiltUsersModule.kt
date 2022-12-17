@@ -1,11 +1,7 @@
 package com.comp491.investsmart.domain.users.inject
 
-import com.comp491.investsmart.domain.users.usecases.LogOutUseCase
-import com.comp491.investsmart.domain.users.usecases.SignInUseCase
-import com.comp491.investsmart.domain.users.usecases.SignUpUseCase
-import com.comp491.investsmart.domain.users.usecases.internal.LogOutUseCaseImpl
-import com.comp491.investsmart.domain.users.usecases.internal.SignInUseCaseImpl
-import com.comp491.investsmart.domain.users.usecases.internal.SignUpUseCaseImpl
+import com.comp491.investsmart.domain.users.usecases.*
+import com.comp491.investsmart.domain.users.usecases.internal.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,4 +25,14 @@ abstract class HiltUsersModule {
     abstract fun bindSignInUseCase(
         signInUseCaseImpl: SignInUseCaseImpl
     ): SignInUseCase
+
+    @Binds
+    abstract fun bindGetUserInfoUseCase(
+        getUserInfoUseCaseImpl: GetUserInfoUseCaseImpl
+    ): GetUserInfoUseCase
+
+    @Binds
+    abstract fun bindSetUserInfoUseCase(
+        setUserInfoUseCaseImpl: SetUserInfoUseCaseImpl
+    ): SetUserInfoUseCase
 }

@@ -1,10 +1,15 @@
 package com.comp491.investsmart.ui.settings
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.comp491.investsmart.domain.users.entities.UserInfoType
+import com.comp491.investsmart.domain.users.usecases.GetUserInfoUseCase
+import com.comp491.investsmart.domain.users.usecases.LogOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SettingsVMState(
@@ -14,6 +19,8 @@ data class SettingsVMState(
 
 @HiltViewModel
 class SettingsViewModel  @Inject constructor(
+    private val getUserInfoUseCase: GetUserInfoUseCase,
+    private val logOutUseCase: LogOutUseCase,
 ) : ViewModel() {
 
     private val vmState = SettingsVMState(
@@ -24,14 +31,18 @@ class SettingsViewModel  @Inject constructor(
     val uiState: StateFlow<SettingsVMState> = _vmState.asStateFlow()
 
     init {
-        _vmState.value = SettingsVMState(
-            username = "",
-            email = ""
-        )
+        viewModelScope.launch {
+            _vmState.value = SettingsVMState(
+                username =  getUserInfoUseCase(UserInfoType.USERNAME),
+                email =  getUserInfoUseCase(UserInfoType.EMAIL),
+            )
+        }
     }
 
     fun onLogOutButtonClicked() {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            logOutUseCase()
+        }
     }
 
     fun onChangePasswordButtonClicked() {

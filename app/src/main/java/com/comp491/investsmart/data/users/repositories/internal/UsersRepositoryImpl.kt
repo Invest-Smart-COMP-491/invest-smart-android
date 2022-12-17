@@ -5,8 +5,9 @@ import com.comp491.investsmart.domain.users.repositories.UsersRepository
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
-    investSmartService: InvestSmartService,
+    private val investSmartService: InvestSmartService,
 ): UsersRepository {
+
     override suspend fun logOut() {
         TODO("Not yet implemented")
     }

@@ -90,6 +90,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
     testImplementation("androidx.arch.core:core-testing:$arch_version")
     testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }
 
 // Allow references to generated code

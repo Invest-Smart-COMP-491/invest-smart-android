@@ -46,12 +46,14 @@ private fun SettingsScreenContent(
             text = uiState.email,
         )
         Spacer(modifier = Modifier.height(25.dp))
+/*
         SettingRow(
             title = stringResource(id = R.string.settings_password),
             text = stringResource(id = R.string.change_password_button),
             onClick = onChangePasswordButtonClicked
         )
         Spacer(modifier = Modifier.height(25.dp))
+*/
         LogOutButton(
             text = stringResource(id = R.string.log_out_button),
             onClick = onLogOutButtonClicked,

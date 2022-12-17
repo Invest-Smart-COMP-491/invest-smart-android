@@ -3,12 +3,11 @@ package com.comp491.investsmart.data.api.retrofit
 import com.comp491.investsmart.data.assets.entities.AssetEntity
 import com.comp491.investsmart.data.assets.entities.AssetPriceEntity
 import com.comp491.investsmart.data.news.entities.NewsEntity
+import com.comp491.investsmart.data.users.entities.LoginUserEntity
+import com.comp491.investsmart.data.users.entities.RegisterUserEntity
 import com.comp491.investsmart.domain.comments.entities.Comment
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface InvestSmartService {
 
@@ -24,8 +23,10 @@ interface InvestSmartService {
     @GET("/api/assets/{keyword}")
     suspend fun getAssetsWithKeyword(@Query("keyword") keyword: String): Response<List<AssetEntity>>
 
-    @GET("/api/assets/fav")
-    suspend fun getFavouriteAssets(): Response<List<AssetEntity>>
+    @GET("/api/assets/favorite")
+    suspend fun getFavouriteAssets(
+        @Header("Authorization") token: String
+    ): Response<List<AssetEntity>>
 
     @GET("/api/prices/{assetTicker}")
     suspend fun getAssetPrices(@Query("assetTicker") assetTicker: String):
@@ -36,11 +37,14 @@ interface InvestSmartService {
             Response<List<Comment>>
 
     @POST("/api/register")
-    suspend fun register(@Body string: String): Response<Unit>
+    suspend fun register(@Body user: RegisterUserEntity): Response<Unit>
 
     @POST("/api/login")
-    suspend fun login(@Body string: String): Response<Unit>
+    suspend fun login(@Body user: LoginUserEntity): Response<Unit>
 
     @POST("/api/logout")
-    suspend fun logout(@Body string: String): Response<Unit>
+    suspend fun logout(
+        @Header("Authorization") token: String,
+        @Body string: String,
+    ): Response<Unit>
 }
