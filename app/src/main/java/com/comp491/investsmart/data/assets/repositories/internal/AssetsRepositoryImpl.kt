@@ -9,7 +9,6 @@ import com.comp491.investsmart.data.datastore.DataStoreManager
 import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.domain.assets.entities.AssetPrice
 import com.comp491.investsmart.domain.assets.repositories.AssetsRepository
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class AssetsRepositoryImpl @Inject constructor(

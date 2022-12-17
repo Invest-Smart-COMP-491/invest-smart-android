@@ -8,7 +8,6 @@ import com.comp491.investsmart.domain.users.entities.User
 import com.comp491.investsmart.domain.users.entities.toLoginUserEntity
 import com.comp491.investsmart.domain.users.entities.toRegisterUserEntity
 import com.comp491.investsmart.domain.users.repositories.UsersRepository
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
@@ -17,7 +16,7 @@ class UsersRepositoryImpl @Inject constructor(
 ): UsersRepository {
 
     override suspend fun logOut(): Result<Unit> {
-        return  safeApiCall {
+        return safeApiCall {
             investSmartService.logout(
                 token = dataStoreManager.getLatestToken(),
             )
@@ -39,7 +38,7 @@ class UsersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun signUp(user: User): Result<String> {
-        val result =  safeApiCall {
+        val result = safeApiCall {
             investSmartService.register(
                 user = user.toRegisterUserEntity(),
             )
