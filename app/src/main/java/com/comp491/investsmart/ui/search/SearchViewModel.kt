@@ -36,15 +36,21 @@ class SearchViewModel @Inject constructor(
     fun onSearchRequested(text: String) {
         _vmState.value.isLoading = true
         viewModelScope.launch {
-            // TODO: handle error case, show an error dialog
-            val searchAssets = async {
-                getAssetsWithKeywordUseCase(text).data ?: emptyList()
+            try {
+                val searchAssets = async {
+                    getAssetsWithKeywordUseCase(text).data ?: emptyList()
+                }
+                _vmState.value = SearchVMState(
+                    assets = searchAssets.await(),
+                    isLoading = false,
+                )
+            } catch (e: java.lang.Exception) {
+                _vmState.value = SearchVMState(
+                    assets = emptyList(),
+                    isLoading = true,
+                )
+                e.printStackTrace();
             }
-
-            _vmState.value = SearchVMState(
-                assets = searchAssets.await(),
-                isLoading = false,
-            )
         }
     }
 
