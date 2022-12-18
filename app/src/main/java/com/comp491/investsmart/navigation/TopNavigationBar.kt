@@ -21,6 +21,7 @@ fun TopNavigationBar(navController: NavController) {
         NavRoute.Settings.route,
         NavRoute.Comments.withArgsFormat(NavRoute.Comments.commentId),
         NavRoute.AssetDetail.withArgsFormat(NavRoute.AssetDetail.assetTicker),
+        NavRoute.WebPage.withArgsFormat(NavRoute.WebPage.url),
     )
     val routesToShowSettingsIcon = listOf(
         NavRoute.Home.route,

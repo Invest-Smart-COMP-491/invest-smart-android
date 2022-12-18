@@ -56,8 +56,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onNewsClicked(url: String) {
-
+    fun onNewsClicked(
+        url: String,
+        navController: NavController,
+    ) {
+        navController.navigate(NavRoute.WebPage.withArgs(url.replace("/", " ")))
     }
 
     fun onAssetClicked(
