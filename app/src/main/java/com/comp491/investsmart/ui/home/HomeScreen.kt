@@ -28,7 +28,12 @@ fun HomeScreen(
 ) {
     HomeScreenContent(
         uiState = viewModel.uiState.collectAsState().value,
-        onNewsClicked = viewModel::onNewsClicked,
+        onNewsClicked = {url ->
+            viewModel.onNewsClicked(
+                url = url,
+                navController = navController,
+            )
+        },
         onAssetClicked = { assetTicker ->
             viewModel.onAssetClicked(
                 assetTicker = assetTicker,

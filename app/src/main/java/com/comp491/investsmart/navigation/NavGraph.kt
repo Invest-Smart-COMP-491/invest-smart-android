@@ -16,6 +16,7 @@ import com.comp491.investsmart.ui.login.LoginScreen
 import com.comp491.investsmart.ui.profile.ProfileScreen
 import com.comp491.investsmart.ui.search.SearchScreen
 import com.comp491.investsmart.ui.settings.SettingsScreen
+import com.comp491.investsmart.ui.webpage.WebPageScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -68,5 +69,12 @@ private fun addScreens(
         arguments = listOf(navArgument("asset_ticker") { type = NavType.StringType }),
     ) {
         AssetDetailScreen(hiltViewModel(), navController)
+    }
+
+    navGraphBuilder.composable(
+        route = NavRoute.WebPage.withArgsFormat(NavRoute.WebPage.url),
+        arguments = listOf(navArgument("url") { type = NavType.StringType }),
+    ) {
+        WebPageScreen(hiltViewModel(), navController)
     }
 }

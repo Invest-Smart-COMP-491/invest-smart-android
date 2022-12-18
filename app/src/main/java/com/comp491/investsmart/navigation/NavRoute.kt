@@ -22,6 +22,10 @@ sealed class NavRoute(val route: String) {
         const val assetTicker = "asset_ticker"
     }
 
+    object WebPage: NavRoute("web_page") {
+        const val url = "url"
+    }
+
     fun withArgs(vararg args: String): String {
         return buildString {
             append(route)
