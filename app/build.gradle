@@ -91,9 +91,16 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:$arch_version")
     testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation ("io.data2viz.d2v:core-js:$d2vVersion")
+    implementation ("io.data2viz.charts:core:$chartsVersion")
 }
 
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
 }
+
+val d2vVersion: String by project
+val chartsVersion: String by project

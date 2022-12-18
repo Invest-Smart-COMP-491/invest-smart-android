@@ -1,5 +1,6 @@
 package com.comp491.investsmart.ui.assetdetail
 
+//import android
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,8 @@ class AssetDetailViewModel @Inject constructor(
             photoUrl = "https://picsum.photos/200",
             marketSize = 200.0,
         )
+
+
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<AssetDetailVMState> = _vmState.asStateFlow()
