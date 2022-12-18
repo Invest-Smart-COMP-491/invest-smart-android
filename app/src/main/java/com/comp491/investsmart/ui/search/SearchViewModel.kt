@@ -34,6 +34,7 @@ class SearchViewModel @Inject constructor(
     init {}
 
     fun onSearchRequested(text: String) {
+        // prints stack and inits an empty list if error is caught
         _vmState.value.isLoading = true
         viewModelScope.launch {
             try {
