@@ -83,7 +83,7 @@ private fun AssetRow(
         }
 
         Text(
-            text = stringResource(id = R.string.asset_price, asset.lastPrice.toString()),
+            text = stringResource(id = R.string.asset_price, String.format("%.2f", asset.lastPrice)),
             fontFamily = montserratFamily,
             fontWeight = FontWeight.Medium,
             fontSize = 13.sp,

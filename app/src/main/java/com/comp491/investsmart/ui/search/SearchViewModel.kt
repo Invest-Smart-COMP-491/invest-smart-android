@@ -1,13 +1,17 @@
 package com.comp491.investsmart.ui.search
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.comp491.investsmart.domain.assets.entities.Asset
+import com.comp491.investsmart.domain.assets.usecases.GetAssetsWithKeywordUseCase
 import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class SearchVMState(
@@ -17,6 +21,7 @@ data class SearchVMState(
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    private val getAssetsWithKeywordUseCase: GetAssetsWithKeywordUseCase
 ) : ViewModel() {
 
     private val vmState = SearchVMState(
@@ -29,7 +34,17 @@ class SearchViewModel @Inject constructor(
     init {}
 
     fun onSearchRequested(text: String) {
-        TODO("Not yet implemented, don't forget isLoading")
+        viewModelScope.launch {
+            // TODO: handle error case, show an error dialog
+            val searchAssets = async {
+                getAssetsWithKeywordUseCase(text).data ?: emptyList()
+            }
+
+            _vmState.value = SearchVMState(
+                assets = searchAssets.await(),
+                isLoading = false,
+            )
+        }
     }
 
     fun onAssetClicked(

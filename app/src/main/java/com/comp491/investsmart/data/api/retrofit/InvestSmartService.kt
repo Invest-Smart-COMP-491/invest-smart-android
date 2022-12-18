@@ -23,8 +23,8 @@ interface InvestSmartService {
     @GET("/api/news/{assetTicker}")
     suspend fun getAssetNews(@Query("assetTicker") assetTicker: String): Response<List<NewsEntity>>
 
-    @GET("/api/assets?search={keyword}")
-    suspend fun getAssetsWithKeyword(@Query("keyword") keyword: String): Response<List<AssetEntity>>
+    @GET("/api/assets")
+    suspend fun getAssetsWithKeyword(@Query("search") keyword: String): Response<List<AssetEntity>>
 
     @GET("/api/prices/{assetTicker}")
     suspend fun getAssetPrices(@Query("assetTicker") assetTicker: String):
