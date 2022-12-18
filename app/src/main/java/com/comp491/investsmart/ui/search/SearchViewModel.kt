@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 data class SearchVMState(
     val assets: List<Asset>,
-    val isLoading: Boolean,
+    var isLoading: Boolean,
 )
 
 @HiltViewModel
@@ -34,6 +34,7 @@ class SearchViewModel @Inject constructor(
     init {}
 
     fun onSearchRequested(text: String) {
+        _vmState.value.isLoading = true
         viewModelScope.launch {
             // TODO: handle error case, show an error dialog
             val searchAssets = async {

@@ -7,4 +7,7 @@ import com.squareup.moshi.Json
 data class TokenEntity (
     @Json(name = "token")
     val token: String,
+
+    @Json(name = "user")
+    val user: ResponseUserEntity,
 )

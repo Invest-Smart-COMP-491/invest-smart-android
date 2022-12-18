@@ -31,6 +31,10 @@ class UsersRepositoryImpl @Inject constructor(
         }
 
         return if (result is Result.Success) {
+            if(result.data?.user != null){
+                dataStoreManager.setEmail(result.data.user.email)
+                dataStoreManager.setUsername(result.data.user.username)
+            }
             Result.Success(data = result.data?.token ?: "")
         } else {
             Result.Error(errorMessage = result.message ?: "Something went wrong")
