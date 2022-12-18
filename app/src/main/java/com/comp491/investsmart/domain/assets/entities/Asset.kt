@@ -1,7 +1,7 @@
 package com.comp491.investsmart.domain.assets.entities
 
 data class Asset(
-    val assetName: String,
+    var assetName: String,
     val assetTicker: String,
     val lastPrice: Double,
     val assetCategory: String,
