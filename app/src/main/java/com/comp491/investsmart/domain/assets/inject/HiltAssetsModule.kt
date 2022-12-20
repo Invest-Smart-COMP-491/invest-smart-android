@@ -32,6 +32,11 @@ abstract class HiltAssetsModule {
     ): GetAssetsWithKeywordUseCase
 
     @Binds
+    abstract fun bindGetAssetUseCase(
+        getAssetUseCaseImpl: GetAssetUseCaseImpl
+    ): GetAssetUseCase
+
+    @Binds
     abstract fun bindFollowUnfollowAssetUseCase(
         followUnfollowAssetUseCaseImpl: FollowUnfollowAssetUseCaseImpl
     ): FollowUnfollowAssetUseCase

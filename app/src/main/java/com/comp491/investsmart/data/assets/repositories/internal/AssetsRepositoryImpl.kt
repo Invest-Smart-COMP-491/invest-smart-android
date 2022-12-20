@@ -58,6 +58,18 @@ class AssetsRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getAsset(assetTicker: String): Result<Asset> {
+        val result =  safeApiCall {
+            investSmartService.getAsset(assetTicker = assetTicker)
+        }
+
+        return if (result is Result.Success) {
+            Result.Success(data = result.data?.toDomain() ?: Asset("","",0.0,"",0, "", 0.0))
+        } else {
+            Result.Error(errorMessage = result.message ?: "Something went wrong")
+        }
+    }
+
     override suspend fun getAssetsWithKeyword(keyword: String): Result<List<Asset>> {
         val result =  safeApiCall {
             investSmartService.getAssetsWithKeyword(keyword = keyword)
