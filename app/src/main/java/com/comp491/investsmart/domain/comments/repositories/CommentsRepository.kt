@@ -6,6 +6,6 @@ import com.comp491.investsmart.data.api.Result
 
 interface CommentsRepository {
 
-    suspend fun getAssetComments(assetTicker: String): Result<List<Comment>>
+    suspend fun getAssetComments(assetTicker: String, commentParent: String): Result<List<Comment>>
     suspend fun addComment(addComment: AddComment): Result<Unit>
 }

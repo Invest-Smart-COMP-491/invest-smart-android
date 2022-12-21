@@ -10,7 +10,7 @@ class GetAssetCommentsUseCaseImpl @Inject constructor(
     private val commentsRepository: CommentsRepository,
 ): GetAssetCommentsUseCase {
 
-    override suspend fun invoke(assetTicker: String): Result<List<Comment>> {
-        return commentsRepository.getAssetComments(assetTicker = assetTicker)
+    override suspend fun invoke(assetTicker: String, commentParent: String): Result<List<Comment>> {
+        return commentsRepository.getAssetComments(assetTicker = assetTicker, commentParent = commentParent)
     }
 }

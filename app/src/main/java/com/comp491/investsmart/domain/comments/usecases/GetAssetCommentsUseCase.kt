@@ -5,5 +5,5 @@ import com.comp491.investsmart.data.api.Result
 
 interface GetAssetCommentsUseCase {
 
-    suspend operator fun invoke(assetTicker: String): Result<List<Comment>>
+    suspend operator fun invoke(assetTicker: String, commentParent: String): Result<List<Comment>>
 }

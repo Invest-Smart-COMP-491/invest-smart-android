@@ -16,9 +16,9 @@ class CommentsRepositoryImpl @Inject constructor(
     private val investSmartService: InvestSmartService,
 ): CommentsRepository {
 
-    override suspend fun getAssetComments(assetTicker: String): Result<List<Comment>> {
+    override suspend fun getAssetComments(assetTicker: String, commentParent: String): Result<List<Comment>> {
         val result = safeApiCall {
-            investSmartService.getAssetComments(assetTicker = assetTicker)
+            investSmartService.getAssetComments(assetTicker = assetTicker, commentParent = commentParent)
         }
 
         return if (result is Result.Success) {
