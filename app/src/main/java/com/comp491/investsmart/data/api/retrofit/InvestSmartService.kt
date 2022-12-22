@@ -21,18 +21,25 @@ interface InvestSmartService {
     suspend fun getTrendingAssets(): Response<List<AssetEntity>>
 
     @GET("/api/news/{assetTicker}")
-    suspend fun getAssetNews(@Query("assetTicker") assetTicker: String): Response<List<NewsEntity>>
+    suspend fun getAssetNews(@Path("assetTicker") assetTicker: String): Response<List<NewsEntity>>
 
     @GET("/api/assets")
     suspend fun getAssetsWithKeyword(@Query("search") keyword: String): Response<List<AssetEntity>>
 
+    @GET("/api/assets/{assetTicker}")
+    suspend fun getAsset(@Path("assetTicker") assetTicker: String): Response<AssetEntity>
+
     @GET("/api/prices/{assetTicker}")
-    suspend fun getAssetPrices(@Query("assetTicker") assetTicker: String):
+    suspend fun getAssetPrices(@Path("assetTicker") assetTicker: String):
             Response<List<AssetPriceEntity>>
 
-    @GET("/api/comments/{assetTicker}")
-    suspend fun getAssetComments(@Query("assetTicker") assetTicker: String):
+    @GET("/api/comments")
+    suspend fun getAssetComments(@Query("asset_ticker") assetTicker: String?, @Query("parent_comment") commentParent: String?, @Query("user") userId: Int?):
             Response<List<CommentEntity>>
+
+    @GET("/api/comments")
+    suspend fun getCommentById(@Query("comment_id") comment_id: Int):
+            Response<CommentEntity>
 
     @POST("/api/comments/")
     suspend fun addComment(

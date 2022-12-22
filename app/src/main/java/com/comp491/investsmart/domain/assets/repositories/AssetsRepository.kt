@@ -7,6 +7,7 @@ import com.comp491.investsmart.domain.assets.entities.AssetPrice
 interface AssetsRepository {
 
     suspend fun getTrendingAssets(): Result<List<Asset>>
+    suspend fun getAsset(assetTicker: String): Result<Asset>
     suspend fun getAssetsWithKeyword(keyword: String): Result<List<Asset>>
     suspend fun getAssetPrices(assetTicker: String): Result<List<AssetPrice>>
     suspend fun getFavouriteAssets():Result<List<Asset>>
