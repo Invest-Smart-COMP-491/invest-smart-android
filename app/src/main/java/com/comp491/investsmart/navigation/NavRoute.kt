@@ -26,6 +26,10 @@ sealed class NavRoute(val route: String) {
         const val url = "url"
     }
 
+    object CommentLike: NavRoute("commentLikes") {
+        const val commentId = "comment_id"
+    }
+
     fun withArgs(vararg args: String): String {
         return buildString {
             append(route)
