@@ -47,12 +47,14 @@ private fun AssetRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onAssetClicked(asset.assetTicker) },
+            .clickable { onAssetClicked(asset.assetTicker) }
+            .padding(vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .weight(0.7F),
         ) {
             Image(
                 painter =  rememberAsyncImagePainter(
@@ -82,12 +84,20 @@ private fun AssetRow(
             }
         }
 
-        Text(
-            text = stringResource(id = R.string.asset_price, String.format("%.2f", asset.lastPrice)),
-            fontFamily = montserratFamily,
-            fontWeight = FontWeight.Medium,
-            fontSize = 13.sp,
-            color = Black,
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.3F)
+        ) {
+            Text(
+                text = stringResource(id = R.string.asset_price, String.format("%.2f", asset.lastPrice)),
+                fontFamily = montserratFamily,
+                fontWeight = FontWeight.Medium,
+                fontSize = 13.sp,
+                color = Black,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd),
+            )
+        }
     }
 }

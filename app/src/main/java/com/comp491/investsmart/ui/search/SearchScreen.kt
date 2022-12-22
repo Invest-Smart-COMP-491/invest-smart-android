@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.comp491.investsmart.R
@@ -109,22 +108,6 @@ private fun SearchScreenContent(
                 )
             }
         } else {
-            val itr = uiState.assets.listIterator()    // or, use `iterator()`
-            while (itr.hasNext()) {
-                var ast = itr.next()
-                var it = ast.assetName
-                if (it.length >= 20) {
-                    ast.assetName = it.substring(0, 20) + "..."
-
-                    /*if (it.indexOf("Corp") != -1 || it.indexOf("Comp") != -1) {
-                        val endIndex = kotlin.math.max(it.indexOf("Corp"),
-                            it.indexOf("Com"))
-                        it.replaceRange(endIndex, it.length, "...")
-                        ast.assetName = it
-                    } else { */
-                }
-            }
-
             AssetList(
                 assets = uiState.assets,
                 onAssetClicked = onAssetClicked,
