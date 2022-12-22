@@ -16,9 +16,9 @@ class CommentsRepositoryImpl @Inject constructor(
     private val investSmartService: InvestSmartService,
 ): CommentsRepository {
 
-    override suspend fun getAssetComments(assetTicker: String, commentParent: String): Result<List<Comment>> {
+    override suspend fun getAssetComments(assetTicker: String?, commentParent: String?, userId: Int?): Result<List<Comment>> {
         val result = safeApiCall {
-            investSmartService.getAssetComments(assetTicker = assetTicker, commentParent = commentParent)
+            investSmartService.getAssetComments(assetTicker = assetTicker, commentParent = commentParent, userId = userId)
         }
 
         return if (result is Result.Success) {
@@ -34,6 +34,18 @@ class CommentsRepositoryImpl @Inject constructor(
                 token = dataStoreManager.getLatestToken(),
                 addCommentEntity = addComment.toEntity(),
             )
+        }
+    }
+
+    override suspend fun getCommentById(commentId: Int): Result<Comment> {
+        val result = safeApiCall {
+            investSmartService.getCommentById(comment_id = commentId)
+        }
+
+        return if (result is Result.Success) {
+            Result.Success(data = result.data?.toDomain()  ?: Comment(0, "", 0, "", "", "", 0, "", 0))
+        } else {
+            Result.Error(errorMessage = result.message ?: "Something went wrong")
         }
     }
 }

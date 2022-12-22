@@ -63,7 +63,7 @@ class AssetDetailViewModel @Inject constructor(
             }
 
             val comments = async {
-                getAssetCommentsUseCase(assetTicker = ticker, commentParent = "").data ?: emptyList()
+                getAssetCommentsUseCase(assetTicker = ticker, commentParent = "", userId = null).data ?: emptyList()
             }
 
             _vmState.value = AssetDetailVMState(
@@ -72,11 +72,6 @@ class AssetDetailViewModel @Inject constructor(
                 assetComments = comments.await(),
                 isLoading = false,
             )
-
-            println(comments)
-            println(news)
-
-
         }
     }
 
