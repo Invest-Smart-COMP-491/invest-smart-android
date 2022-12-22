@@ -46,14 +46,10 @@ class DataStoreManager @Inject constructor(
         }
     }
 
-    suspend fun getLatestToken(): String {
-        var latestValue = token.first()
-
-//        token.take(token.count()).collectLatest {
-//            latestValue = it
-//        }
-
-        return "Token $latestValue"
+    suspend fun deleteToken() {
+        dataStore.edit { preferences ->
+            preferences.remove(TOKEN_KEY)
+        }
     }
 
     companion object {

@@ -9,6 +9,7 @@ import com.comp491.investsmart.data.datastore.DataStoreManager
 import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.domain.assets.entities.AssetPrice
 import com.comp491.investsmart.domain.assets.repositories.AssetsRepository
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class AssetsRepositoryImpl @Inject constructor(
@@ -29,7 +30,7 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun getFavouriteAssets(): Result<List<Asset>> {
         val result =  safeApiCall {
             investSmartService.getFavouriteAssets(
-                token = dataStoreManager.getLatestToken(),
+                token = dataStoreManager.token.first(),
             )
         }
 
@@ -43,7 +44,7 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun followAsset(assetTicker: String): Result<Unit>{
         return safeApiCall {
             investSmartService.followAsset(
-                token = dataStoreManager.getLatestToken(),
+                token = dataStoreManager.token.first(),
                 assetTicker = AssetTickerEntity(assetTicker = assetTicker)
             )
         }
@@ -52,7 +53,7 @@ class AssetsRepositoryImpl @Inject constructor(
     override suspend fun unfollowAsset(assetTicker: String): Result<Unit> {
         return safeApiCall {
             investSmartService.unFollowAsset(
-                token = dataStoreManager.getLatestToken(),
+                token = dataStoreManager.token.first(),
                 assetTicker = AssetTickerEntity(assetTicker = assetTicker)
             )
         }
