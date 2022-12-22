@@ -28,7 +28,12 @@ fun ProfileScreen(
                 navController = navController,
             )
         },
-        onAssetTickerClicked = viewModel::onAssetTickerClicked,
+        onAssetTickerClicked = { assetTicker ->
+            viewModel.onAssetTickerClicked(
+                navController = navController,
+                assetTicker = assetTicker,
+            )
+        },
     )
 }
 
