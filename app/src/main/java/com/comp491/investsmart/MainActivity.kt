@@ -6,27 +6,45 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.comp491.investsmart.data.datastore.DataStoreManager
 import com.comp491.investsmart.navigation.BottomNavigationBar
 import com.comp491.investsmart.navigation.NavGraph
 import com.comp491.investsmart.navigation.NavRoute
 import com.comp491.investsmart.navigation.TopNavigationBar
 import com.comp491.investsmart.ui.theme.InvestSmartTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity() : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            MainScreen()
+
+       lifecycleScope.launch {
+           val token = DataStoreManager(appContext = applicationContext).token.first()
+
+           val startDestination = if (token == "") {
+               NavRoute.Login.route
+           } else {
+               NavRoute.Home.route
+           }
+
+           setContent {
+               MainScreen(startDestination = startDestination)
+           }
         }
     }
 }
 
 @Composable
-private fun MainScreen() {
+private fun MainScreen(
+    startDestination: String,
+) {
+
     val routesToShowBottomNavigationBar = listOf(
         NavRoute.Home.route,
         NavRoute.Search.route,
@@ -48,7 +66,10 @@ private fun MainScreen() {
             }
         ) {
 
-            NavGraph(navController = navController)
+            NavGraph(
+                navController = navController,
+                startDestination = startDestination,
+            )
         }
     }
 }

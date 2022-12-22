@@ -18,7 +18,6 @@ class SetUserInfoUseCaseImpl @Inject constructor(
                 dataStoreManager.setUsername(username = value)
             }
             UserInfoType.TOKEN -> {
-                dataStoreManager.deleteToken()
                 dataStoreManager.setToken(token = value)
             }
         }

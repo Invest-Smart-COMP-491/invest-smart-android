@@ -9,6 +9,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.comp491.investsmart.domain.users.entities.UserInfoType
+import com.comp491.investsmart.domain.users.usecases.SetUserInfoUseCase
 import com.comp491.investsmart.ui.assetdetail.AssetDetailScreen
 import com.comp491.investsmart.ui.comments.CommentsScreen
 import com.comp491.investsmart.ui.favourites.FavouritesScreen
@@ -19,11 +21,13 @@ import com.comp491.investsmart.ui.settings.SettingsScreen
 import com.comp491.investsmart.ui.webpage.WebPageScreen
 
 @Composable
-fun NavGraph(navController: NavHostController) {
-
+fun NavGraph(
+    navController: NavHostController,
+    startDestination: String,
+) {
     NavHost(
         navController = navController,
-        startDestination = NavRoute.Login.route
+        startDestination = startDestination,
     ) {
         addScreens(navController, this)
     }
