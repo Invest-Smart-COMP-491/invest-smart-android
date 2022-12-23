@@ -47,6 +47,23 @@ interface InvestSmartService {
         @Body addCommentEntity: AddCommentEntity,
     ): Response<Unit>
 
+    @GET("/api/comment-likes")
+    suspend fun getUserLikedComments(
+        @Query("user") userId: Int,
+    ): Response<List<CommentEntity>>
+
+    @PUT("/api/comment-likes")
+    suspend fun likeComment(
+        @Header("Authorization") token: String,
+        @Query("comment_id") commentId: Int,
+    ): Response<Unit>
+
+    @DELETE("/api/comment-likes")
+    suspend fun unlikeComment(
+        @Header("Authorization") token: String,
+        @Query("comment_id") commentId: Int,
+    ): Response<Unit>
+
     @GET("/api/favorite")
     suspend fun getFavouriteAssets(
         @Header("Authorization") token: String
