@@ -76,7 +76,6 @@ fun AssetDetailContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 60.dp)
                 .padding(horizontal = 15.dp),
         ) {
             AssetDetails(
@@ -123,6 +122,7 @@ private fun AssetDetails(
                 .fillMaxWidth()
                 .padding(top = 15.dp, bottom = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
                 modifier = Modifier
@@ -179,7 +179,8 @@ private fun AssetDetails(
 
         Row(
             modifier = Modifier
-                .padding(bottom = 20.dp)
+                .padding(bottom = 20.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             SectionButton(
                 onClick = {
@@ -229,7 +230,11 @@ private fun SectionButton(
             fontFamily = montserratFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
-            color = White,
+            color = if (isSelected) {
+                White
+            } else {
+                DarkGreen
+            },
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp),
         )
     }
