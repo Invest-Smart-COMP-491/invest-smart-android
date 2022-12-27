@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -23,10 +24,7 @@ import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.ui.common.CommentList
 import com.comp491.investsmart.ui.common.CommentListType
 import com.comp491.investsmart.ui.common.NewsList
-import com.comp491.investsmart.ui.theme.Black
-import com.comp491.investsmart.ui.theme.DarkGreen
-import com.comp491.investsmart.ui.theme.White
-import com.comp491.investsmart.ui.theme.montserratFamily
+import com.comp491.investsmart.ui.theme.*
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -63,34 +61,47 @@ fun AssetDetailContent(
     onPriceGraphButtonClicked: () -> Unit,
 ) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 60.dp)
-            .padding(horizontal = 15.dp),
-    ) {
-        AssetDetails(
-            asset = uiState.asset,
-            pageType = uiState.pageType,
-            onAssetFavouriteButtonClicked = onAssetFavouriteButtonClicked,
-            onPageTypeChanged = onPageTypeChanged,
-            onPriceGraphButtonClicked = onPriceGraphButtonClicked,
-        )
+    if (uiState.isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(40.dp),
+                color = LightBlue,
+                strokeWidth = 5.dp
+            )
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 60.dp)
+                .padding(horizontal = 15.dp),
+        ) {
+            AssetDetails(
+                asset = uiState.asset,
+                pageType = uiState.pageType,
+                onAssetFavouriteButtonClicked = onAssetFavouriteButtonClicked,
+                onPageTypeChanged = onPageTypeChanged,
+                onPriceGraphButtonClicked = onPriceGraphButtonClicked,
+            )
 
-        when (uiState.pageType) {
-            PageType.NEWS -> {
-                NewsList(
-                    news = uiState.assetNews,
-                    onNewsClicked = onNewsClicked,
-                    onAssetTickerClicked = { },
-                )
-            }
-            PageType.COMMENTS -> {
-                CommentList(
-                    commentListType = CommentListType.ASSET_DETAIL_PAGE,
-                    comments = uiState.assetComments,
-                    onLikeButtonClicked = onCommentLikeButtonClicked,
-                )
+            when (uiState.pageType) {
+                PageType.NEWS -> {
+                    NewsList(
+                        news = uiState.assetNews,
+                        onNewsClicked = onNewsClicked,
+                        onAssetTickerClicked = { },
+                    )
+                }
+                PageType.COMMENTS -> {
+                    CommentList(
+                        commentListType = CommentListType.ASSET_DETAIL_PAGE,
+                        comments = uiState.assetComments,
+                        onLikeButtonClicked = onCommentLikeButtonClicked,
+                    )
+                }
             }
         }
     }

@@ -43,13 +43,13 @@ class AssetDetailViewModel @Inject constructor(
 
     private val vmState = AssetDetailVMState(
         asset = Asset(
-            assetName = "Apple",
-            assetTicker = "AAPL",
-            lastPrice = 3.14,
-            assetCategory = "Tech",
-            viewCount = 12,
-            photoUrl = "https://picsum.photos/200",
-            marketSize = 200.0,
+            assetName = "",
+            assetTicker = "",
+            lastPrice = 0.0,
+            assetCategory = "",
+            viewCount = 0,
+            photoUrl = "",
+            marketSize = 0.0,
         ),
         assetNews = emptyList(),
         assetComments = emptyList(),
