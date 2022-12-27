@@ -18,4 +18,7 @@
     <string name="comments_answer_label">Write something...</string>
     <string name="asset_followers">%1$d followers</string>
     <string name="asset_price">%1$s USD</string>
+    <string name="news_button">News</string>
+    <string name="comments_button">Comments</string>
+    <string name="prices_button">Price Graph</string>
 </resources>

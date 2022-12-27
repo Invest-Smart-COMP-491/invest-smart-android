@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.comp491.investsmart.data.api.Constant
 import com.comp491.investsmart.domain.assets.entities.Asset
 import com.comp491.investsmart.domain.assets.usecases.GetAssetUseCase
 import com.comp491.investsmart.domain.comments.entities.Comment
@@ -19,11 +20,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+enum class PageType {
+    COMMENTS,
+    NEWS,
+}
+
 data class AssetDetailVMState(
     var asset: Asset,
     val assetNews: List<News>,
     val assetComments: List<Comment>,
     val isLoading: Boolean,
+    val pageType: PageType,
 )
 
 @HiltViewModel
@@ -47,6 +54,7 @@ class AssetDetailViewModel @Inject constructor(
         assetNews = emptyList(),
         assetComments = emptyList(),
         isLoading = true,
+        pageType = PageType.NEWS,
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<AssetDetailVMState> = _vmState.asStateFlow()
@@ -71,12 +79,27 @@ class AssetDetailViewModel @Inject constructor(
                 assetNews = news.await(),
                 assetComments = comments.await(),
                 isLoading = false,
+                pageType = PageType.NEWS,
             )
         }
     }
 
-    fun onNewsClicked(url: String,
-                      navController: NavController) {
+    fun onPageTypeChanged(pageType: PageType) {
+        _vmState.value = AssetDetailVMState(
+            asset = vmState.asset,
+            assetComments = vmState.assetComments,
+            assetNews = vmState.assetNews,
+            isLoading = false,
+            pageType = pageType,
+        )
+    }
+
+    fun onPriceGraphButtonClicked(navController: NavController) {
+        val url = Constant.baseUrl + "plot/"+ vmState.asset.assetTicker
+        navController.navigate(NavRoute.WebPage.withArgs(url.replace("/", " ")))
+    }
+
+    fun onNewsClicked(url: String, navController: NavController) {
         navController.navigate(NavRoute.WebPage.withArgs(url.replace("/", " ")))
     }
 
@@ -84,7 +107,11 @@ class AssetDetailViewModel @Inject constructor(
         navController.navigate(NavRoute.Comments.withArgs(commentId.toString()))
     }
 
-    fun onLikeButtonClicked(commentId: Int) {
+    fun onCommentLikeButtonClicked(commentId: Int) {
+
+    }
+
+    fun onAssetFavouriteButtonClicked() {
 
     }
 }
