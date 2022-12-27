@@ -34,7 +34,11 @@ interface InvestSmartService {
             Response<List<AssetPriceEntity>>
 
     @GET("/api/comments")
-    suspend fun getAssetComments(@Query("asset_ticker") assetTicker: String?, @Query("parent_comment") commentParent: String?, @Query("user") userId: Int?):
+    suspend fun getAssetComments(
+        @Query("asset_ticker") assetTicker: String?,
+        @Query("parent_comment") commentParent: String?,
+        @Query("user") userId: Int?
+    ):
             Response<List<CommentEntity>>
 
     @GET("/api/comments")

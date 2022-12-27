@@ -1,5 +1,6 @@
 package com.comp491.investsmart.data.users.repositories.internal
 
+import android.util.Log
 import com.comp491.investsmart.data.api.Result
 import com.comp491.investsmart.data.api.retrofit.InvestSmartService
 import com.comp491.investsmart.data.api.safeApiCall
