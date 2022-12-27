@@ -1,6 +1,7 @@
 package com.comp491.investsmart.ui.profile
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,6 +13,7 @@ import androidx.navigation.NavController
 import com.comp491.investsmart.ui.common.CommentListType
 import com.comp491.investsmart.ui.common.CommentList
 import com.comp491.investsmart.ui.theme.DarkGreen
+import com.comp491.investsmart.ui.theme.LightBlue
 import com.comp491.investsmart.ui.theme.montserratFamily
 
 @Composable
@@ -44,29 +46,42 @@ private fun ProfileContent(
     onAnswerButtonClicked: (Int) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 60.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = uiState.username,
-            fontFamily = montserratFamily,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 20.sp,
-            color = DarkGreen,
-            modifier = Modifier.padding(top = 20.dp)
-        )
+    if (uiState.isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(40.dp),
+                color = LightBlue,
+                strokeWidth = 5.dp
+            )
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 60.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = uiState.username,
+                fontFamily = montserratFamily,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                color = DarkGreen,
+                modifier = Modifier.padding(top = 20.dp)
+            )
 
-        Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-        CommentList(
-            commentListType = CommentListType.PROFILE_PAGE,
-            comments = uiState.comments,
-            onLikeButtonClicked = onLikeButtonClicked,
-            onAnswerButtonClicked = onAnswerButtonClicked,
-            onAssetTickerClicked = onAssetTickerClicked,
-        )
+            CommentList(
+                commentListType = CommentListType.PROFILE_PAGE,
+                comments = uiState.comments,
+                onLikeButtonClicked = onLikeButtonClicked,
+                onAnswerButtonClicked = onAnswerButtonClicked,
+                onAssetTickerClicked = onAssetTickerClicked,
+            )
+        }
     }
 }

@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.comp491.investsmart.domain.comments.entities.Comment
+import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
 import com.comp491.investsmart.domain.users.entities.UserInfoType
 import com.comp491.investsmart.domain.users.usecases.GetUserInfoUseCase
 import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,37 +19,42 @@ import javax.inject.Inject
 data class ProfileVMState(
     val comments: List<Comment>,
     val username: String,
+    val isLoading: Boolean,
 )
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserInfoUseCase: GetUserInfoUseCase,
+    private val getAssetCommentsUseCase: GetAssetCommentsUseCase,
 ) : ViewModel() {
 
     private val vmState = ProfileVMState(
         comments = emptyList(),
         username = "",
+        isLoading = true,
     )
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<ProfileVMState> = _vmState.asStateFlow()
 
     init {
         viewModelScope.launch {
+
+            val comments = async {
+                getAssetCommentsUseCase(
+                    assetTicker = null,
+                    commentParent = null,
+                    userId = null, //TODO: User id here.
+                ).data ?: emptyList()
+            }
+
+            val username = async {
+                getUserInfoUseCase(infoType = UserInfoType.USERNAME)
+            }
+
             _vmState.value = ProfileVMState(
-                comments = List(20) {
-                    Comment(
-                        id = 0,
-                        username = "cinnamon",
-                        userId = 12,
-                        assetTicker = "DAMY",
-                        text = "Ah, a functional programmer. Inheritance is messy anyway.",
-                        date = "23.06.2021",
-                        likeCount = 10,
-                        importedFrom = "",
-                        answerCount = 5,
-                    )
-                },
-                username = getUserInfoUseCase(infoType = UserInfoType.USERNAME),
+                comments = comments.await(),
+                username = username.await(),
+                isLoading = false,
             )
         }
     }
