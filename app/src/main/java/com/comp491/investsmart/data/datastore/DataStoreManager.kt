@@ -36,7 +36,7 @@ class DataStoreManager @Inject constructor(
 
     suspend fun setToken(token: String) {
         dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = token
+            preferences[TOKEN_KEY] = "Token $token"
         }
     }
 
