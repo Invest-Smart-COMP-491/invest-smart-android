@@ -25,7 +25,7 @@ data class CommentEntity(
     val likedUsers: List<Int>,
 
     @Json(name = "imported_from")
-    val importedFrom: String,
+    val importedFrom: String?,
 )
 
 fun CommentEntity.toDomain(): Comment {

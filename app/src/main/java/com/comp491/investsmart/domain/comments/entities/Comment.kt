@@ -8,6 +8,6 @@ data class Comment(
     val text: String,
     val date: String,
     val likeCount: Int,
-    val importedFrom: String,
+    val importedFrom: String?,
     val answerCount: Int,
 )
