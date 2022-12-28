@@ -1,6 +1,5 @@
 package com.comp491.investsmart.ui.assetdetail
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +11,7 @@ import com.comp491.investsmart.domain.assets.usecases.FollowUnfollowAssetUseCase
 import com.comp491.investsmart.domain.assets.usecases.GetAssetUseCase
 import com.comp491.investsmart.domain.assets.usecases.GetFavouriteAssetsUseCase
 import com.comp491.investsmart.domain.comments.entities.Comment
+import com.comp491.investsmart.domain.comments.usecases.AddCommentUseCase
 import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
 import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.domain.news.usecases.GetAssetNewsUseCase
@@ -46,6 +46,7 @@ class AssetDetailViewModel @Inject constructor(
     private val getAssetCommentsUseCase: GetAssetCommentsUseCase,
     private val getFavouriteAssetsUseCase: GetFavouriteAssetsUseCase,
     private val followUnfollowAssetUseCase: FollowUnfollowAssetUseCase,
+    private val addCommentUseCase: AddCommentUseCase,
 ) : ViewModel() {
 
     private val vmState = AssetDetailVMState(
@@ -139,6 +140,16 @@ class AssetDetailViewModel @Inject constructor(
                 _vmState.value.isFollowed = true
             }
 
+        }
+    }
+
+    fun onSendClicked(text: String) {
+        viewModelScope.launch {
+            addCommentUseCase(
+                assetTicker = vmState.asset.assetTicker,
+                text = text,
+                parentId = null,
+            )
         }
     }
 }

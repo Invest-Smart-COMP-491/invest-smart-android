@@ -5,16 +5,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -48,6 +49,13 @@ fun AssetDetailScreen(
                 navController = navController,
             )
         },
+        onSendClicked = viewModel::onSendClicked,
+        onAnswerButtonClicked = { commentId ->
+            viewModel.onAnswerButtonClicked(
+                commentId = commentId,
+                navController = navController,
+            )
+        }
     )
 }
 
@@ -59,7 +67,11 @@ fun AssetDetailContent(
     onAssetFavouriteButtonClicked: () -> Unit,
     onPageTypeChanged: (PageType) -> Unit,
     onPriceGraphButtonClicked: () -> Unit,
+    onSendClicked: (String) -> Unit,
+    onAnswerButtonClicked: (Int) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+    var textFieldValue by remember { mutableStateOf("") }
 
     if (uiState.isLoading) {
         Box(
@@ -96,10 +108,51 @@ fun AssetDetailContent(
                     )
                 }
                 PageType.COMMENTS -> {
+                    OutlinedTextField(
+                        value = textFieldValue,
+                        onValueChange = {
+                            textFieldValue = it
+                        },
+                        trailingIcon = {
+                            Text(
+                                text = stringResource(id = R.string.send_button),
+                                fontFamily = montserratFamily,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                color = Gray,
+                                modifier = Modifier
+                                    .padding(end = 15.dp)
+                                    .clickable { onSendClicked(textFieldValue) }
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp),
+                        placeholder = {
+                            Text(
+                                text = stringResource(id = R.string.comments_answer_label),
+                                fontFamily = montserratFamily,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                color = Gray,
+                                modifier = Modifier.padding(start = 10.dp)
+                            )
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                            }
+                        )
+                    )
+
                     CommentList(
                         commentListType = CommentListType.ASSET_DETAIL_PAGE,
                         comments = uiState.assetComments,
                         onLikeButtonClicked = onCommentLikeButtonClicked,
+                        onAnswerButtonClicked = onAnswerButtonClicked,
                     )
                 }
             }
