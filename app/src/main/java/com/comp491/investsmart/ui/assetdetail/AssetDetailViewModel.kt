@@ -1,12 +1,16 @@
 package com.comp491.investsmart.ui.assetdetail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.comp491.investsmart.data.api.Constant
 import com.comp491.investsmart.domain.assets.entities.Asset
+import com.comp491.investsmart.domain.assets.entities.FavouriteAssetAction
+import com.comp491.investsmart.domain.assets.usecases.FollowUnfollowAssetUseCase
 import com.comp491.investsmart.domain.assets.usecases.GetAssetUseCase
+import com.comp491.investsmart.domain.assets.usecases.GetFavouriteAssetsUseCase
 import com.comp491.investsmart.domain.comments.entities.Comment
 import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
 import com.comp491.investsmart.domain.news.entities.News
@@ -29,6 +33,7 @@ data class AssetDetailVMState(
     var asset: Asset,
     val assetNews: List<News>,
     val assetComments: List<Comment>,
+    var isFollowed: Boolean,
     val isLoading: Boolean,
     val pageType: PageType,
 )
@@ -39,6 +44,8 @@ class AssetDetailViewModel @Inject constructor(
     private val getAssetUseCase: GetAssetUseCase,
     private val getAssetNewsUseCase: GetAssetNewsUseCase,
     private val getAssetCommentsUseCase: GetAssetCommentsUseCase,
+    private val getFavouriteAssetsUseCase: GetFavouriteAssetsUseCase,
+    private val followUnfollowAssetUseCase: FollowUnfollowAssetUseCase,
 ) : ViewModel() {
 
     private val vmState = AssetDetailVMState(
@@ -53,6 +60,7 @@ class AssetDetailViewModel @Inject constructor(
         ),
         assetNews = emptyList(),
         assetComments = emptyList(),
+        isFollowed = false,
         isLoading = true,
         pageType = PageType.NEWS,
     )
@@ -63,7 +71,7 @@ class AssetDetailViewModel @Inject constructor(
         val ticker = savedStateHandle.get<String>(NavRoute.AssetDetail.assetTicker).toString()
         viewModelScope.launch {
             val asset = async {
-                getAssetUseCase(ticker).data ?: _vmState.value.asset
+                getAssetUseCase(assetTicker = ticker).data ?: _vmState.value.asset
             }
 
             val news = async {
@@ -74,10 +82,15 @@ class AssetDetailViewModel @Inject constructor(
                 getAssetCommentsUseCase(assetTicker = ticker, commentParent = "", userId = null).data ?: emptyList()
             }
 
+            val userFavouriteAssets = async{
+                getFavouriteAssetsUseCase().data ?: emptyList()
+            }
+
             _vmState.value = AssetDetailVMState(
                 asset = asset.await(),
                 assetNews = news.await(),
                 assetComments = comments.await(),
+                isFollowed = userFavouriteAssets.await().any { x -> x.assetTicker == asset.await().assetTicker},
                 isLoading = false,
                 pageType = PageType.NEWS,
             )
@@ -86,16 +99,17 @@ class AssetDetailViewModel @Inject constructor(
 
     fun onPageTypeChanged(pageType: PageType) {
         _vmState.value = AssetDetailVMState(
-            asset = vmState.asset,
-            assetComments = vmState.assetComments,
-            assetNews = vmState.assetNews,
+            asset = _vmState.value.asset,
+            assetComments = _vmState.value.assetComments,
+            assetNews = _vmState.value.assetNews,
+            isFollowed = _vmState.value.isFollowed,
             isLoading = false,
             pageType = pageType,
         )
     }
 
     fun onPriceGraphButtonClicked(navController: NavController) {
-        val url = Constant.baseUrl + "plot/"+ vmState.asset.assetTicker
+        val url = Constant.baseUrl + "plot/"+ _vmState.value.asset.assetTicker
         navController.navigate(NavRoute.WebPage.withArgs(url.replace("/", " ")))
     }
 
@@ -112,6 +126,19 @@ class AssetDetailViewModel @Inject constructor(
     }
 
     fun onAssetFavouriteButtonClicked() {
+        viewModelScope.launch {
+            if(_vmState.value.isFollowed){
+                async{
+                    followUnfollowAssetUseCase.invoke(FavouriteAssetAction.UNFOLLOW, _vmState.value.asset.assetTicker)
+                }.await()
+                _vmState.value.isFollowed = false
+            }else{
+                async{
+                    followUnfollowAssetUseCase.invoke(FavouriteAssetAction.FOLLOW, _vmState.value.asset.assetTicker)
+                }.await()
+                _vmState.value.isFollowed = true
+            }
 
+        }
     }
 }

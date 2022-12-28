@@ -68,21 +68,21 @@ interface InvestSmartService {
         @Query("comment_id") commentId: Int,
     ): Response<Unit>
 
-    @GET("/api/favorite")
+    @GET("/api/favourite")
     suspend fun getFavouriteAssets(
         @Header("Authorization") token: String
     ): Response<List<AssetEntity>>
 
-    @POST("/api/favorite")
+    @POST("/api/favourite")
     suspend fun followAsset(
         @Header("Authorization") token: String,
-        @Body assetTicker: AssetTickerEntity,
+        @Query("asset") assetTicker: String,
     ): Response<Unit>
 
-    @DELETE("/api/favorite")
+    @DELETE("/api/favourite")
     suspend fun unFollowAsset(
         @Header("Authorization") token: String,
-        @Body assetTicker: AssetTickerEntity,
+        @Query("asset") assetTicker: String,
     ): Response<Unit>
 
     @POST("/api/register/")

@@ -79,6 +79,7 @@ fun AssetDetailContent(
                 .padding(horizontal = 15.dp),
         ) {
             AssetDetails(
+                uiState = uiState,
                 asset = uiState.asset,
                 pageType = uiState.pageType,
                 onAssetFavouriteButtonClicked = onAssetFavouriteButtonClicked,
@@ -108,13 +109,14 @@ fun AssetDetailContent(
 
 @Composable
 private fun AssetDetails(
+    uiState: AssetDetailVMState,
     asset: Asset,
     pageType: PageType,
     onAssetFavouriteButtonClicked: () -> Unit,
     onPageTypeChanged: (PageType) -> Unit,
     onPriceGraphButtonClicked: () -> Unit,
 ) {
-    var isAssetInFavourites by remember { mutableStateOf(false) }
+    var isAssetInFavourites by remember { mutableStateOf(uiState.isFollowed) }
 
     Column {
         Row(

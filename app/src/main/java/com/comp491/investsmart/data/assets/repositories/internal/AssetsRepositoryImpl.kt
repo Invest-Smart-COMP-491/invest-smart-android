@@ -1,5 +1,6 @@
 package com.comp491.investsmart.data.assets.repositories.internal
 
+import android.util.Log
 import com.comp491.investsmart.data.api.Result
 import com.comp491.investsmart.data.api.retrofit.InvestSmartService
 import com.comp491.investsmart.data.api.safeApiCall
@@ -45,7 +46,7 @@ class AssetsRepositoryImpl @Inject constructor(
         return safeApiCall {
             investSmartService.followAsset(
                 token = dataStoreManager.token.first(),
-                assetTicker = AssetTickerEntity(assetTicker = assetTicker)
+                assetTicker = assetTicker
             )
         }
     }
@@ -54,7 +55,7 @@ class AssetsRepositoryImpl @Inject constructor(
         return safeApiCall {
             investSmartService.unFollowAsset(
                 token = dataStoreManager.token.first(),
-                assetTicker = AssetTickerEntity(assetTicker = assetTicker)
+                assetTicker = assetTicker
             )
         }
     }
@@ -65,7 +66,7 @@ class AssetsRepositoryImpl @Inject constructor(
         }
 
         return if (result is Result.Success) {
-            Result.Success(data = result.data?.toDomain() ?: Asset("","",0.0,"",0, "", 0.0))
+            Result.Success(data = result.data?.toDomain() ?: Asset("","",0.0,"",0,"",0.0))
         } else {
             Result.Error(errorMessage = result.message ?: "Something went wrong")
         }
