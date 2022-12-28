@@ -33,6 +33,7 @@ class UsersRepositoryImpl @Inject constructor(
 
         return if (result is Result.Success) {
             if(result.data?.user != null){
+                dataStoreManager.setUserID(result.data.user.id)
                 dataStoreManager.setEmail(result.data.user.email)
                 dataStoreManager.setUsername(result.data.user.username)
             }

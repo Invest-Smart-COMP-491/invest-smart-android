@@ -13,7 +13,7 @@ class LogOutUseCaseImpl @Inject constructor(
 
     override suspend fun invoke(): Result<Unit> {
         val result = usersRepository.logOut()
-        dataStoreManager.deleteToken()
+        dataStoreManager.deleteUserInfo()
         return result
     }
 }
