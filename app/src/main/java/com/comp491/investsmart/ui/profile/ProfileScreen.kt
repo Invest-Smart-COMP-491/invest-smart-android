@@ -23,7 +23,6 @@ fun ProfileScreen(
 ) {
     ProfileContent(
         uiState = viewModel.uiState.collectAsState().value,
-        onLikeButtonClicked = viewModel::onLikeButtonClicked,
         onAnswerButtonClicked = { commentId ->
             viewModel.onAnswerButtonClicked(
                 commentId = commentId,
@@ -42,7 +41,6 @@ fun ProfileScreen(
 @Composable
 private fun ProfileContent(
     uiState: ProfileVMState,
-    onLikeButtonClicked: (Int) -> Unit,
     onAnswerButtonClicked: (Int) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
@@ -78,7 +76,6 @@ private fun ProfileContent(
             CommentList(
                 commentListType = CommentListType.PROFILE_PAGE,
                 comments = uiState.comments,
-                onLikeButtonClicked = onLikeButtonClicked,
                 onAnswerButtonClicked = onAnswerButtonClicked,
                 onAssetTickerClicked = onAssetTickerClicked,
             )

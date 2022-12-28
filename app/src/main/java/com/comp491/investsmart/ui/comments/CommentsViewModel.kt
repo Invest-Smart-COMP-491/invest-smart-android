@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.comp491.investsmart.domain.comments.entities.Comment
 import com.comp491.investsmart.domain.comments.usecases.AddCommentUseCase
 import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
+import com.comp491.investsmart.domain.comments.usecases.LikeUnlikeCommentUseCase
 import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ class CommentsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getAssetCommentsUseCase: GetAssetCommentsUseCase,
     private val addCommentUseCase: AddCommentUseCase,
+    private val likeUnlikeCommentUseCase: LikeUnlikeCommentUseCase,
 ) : ViewModel() {
 
     private val vmState = CommentsVMState(

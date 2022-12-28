@@ -49,4 +49,22 @@ class CommentsRepositoryImpl @Inject constructor(
             Result.Error(errorMessage = result.message ?: "Something went wrong")
         }
     }
+
+    override suspend fun likeComment(commentId: Int): Result<Unit> {
+        return safeApiCall {
+            investSmartService.likeComment(
+                token = dataStoreManager.token.first(),
+                commentId = commentId,
+            )
+        }
+    }
+
+    override suspend fun unlikeComment(commentId: Int): Result<Unit> {
+        return safeApiCall {
+            investSmartService.unlikeComment(
+                token = dataStoreManager.token.first(),
+                commentId = commentId,
+            )
+        }
+    }
 }

@@ -22,7 +22,7 @@ import com.comp491.investsmart.ui.theme.montserratFamily
 fun CommentList(
     commentListType: CommentListType,
     comments: List<Comment>,
-    onLikeButtonClicked: (Int) -> Unit,
+    onLikeButtonClicked: (Int) -> Unit = {},
     onAnswerButtonClicked: (Int) -> Unit = {},
     onUsernameClicked: (Int) -> Unit = {},
     onAssetTickerClicked: (String) -> Unit = {},

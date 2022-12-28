@@ -13,6 +13,7 @@ import com.comp491.investsmart.domain.assets.usecases.GetFavouriteAssetsUseCase
 import com.comp491.investsmart.domain.comments.entities.Comment
 import com.comp491.investsmart.domain.comments.usecases.AddCommentUseCase
 import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
+import com.comp491.investsmart.domain.comments.usecases.LikeUnlikeCommentUseCase
 import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.domain.news.usecases.GetAssetNewsUseCase
 import com.comp491.investsmart.navigation.NavRoute
@@ -47,6 +48,7 @@ class AssetDetailViewModel @Inject constructor(
     private val getFavouriteAssetsUseCase: GetFavouriteAssetsUseCase,
     private val followUnfollowAssetUseCase: FollowUnfollowAssetUseCase,
     private val addCommentUseCase: AddCommentUseCase,
+    private val likeUnlikeCommentUseCase: LikeUnlikeCommentUseCase,
 ) : ViewModel() {
 
     private val vmState = AssetDetailVMState(

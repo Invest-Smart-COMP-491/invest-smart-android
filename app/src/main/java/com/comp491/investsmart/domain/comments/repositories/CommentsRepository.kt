@@ -9,4 +9,6 @@ interface CommentsRepository {
     suspend fun getAssetComments(assetTicker: String?, commentParent: String?, userId: Int?): Result<List<Comment>>
     suspend fun addComment(addComment: AddComment): Result<Unit>
     suspend fun getCommentById(commentId: Int): Result<Comment>
+    suspend fun likeComment(commentId: Int): Result<Unit>
+    suspend fun unlikeComment(commentId: Int): Result<Unit>
 }

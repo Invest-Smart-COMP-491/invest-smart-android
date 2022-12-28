@@ -63,10 +63,6 @@ class ProfileViewModel @Inject constructor(
         navController.navigate(NavRoute.Comments.withArgs(commentId.toString()))
     }
 
-    fun onLikeButtonClicked(commentId: Int) {
-
-    }
-
     fun onAssetTickerClicked(navController: NavController, assetTicker: String) {
         navController.navigate(NavRoute.AssetDetail.withArgs(assetTicker))
     }
