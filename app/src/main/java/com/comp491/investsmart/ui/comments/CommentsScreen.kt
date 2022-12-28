@@ -26,7 +26,6 @@ fun CommentsScreen(
     CommentsContent(
         uiState = viewModel.uiState.collectAsState().value,
         onLikeButtonClicked = viewModel::onLikeButtonClicked,
-        onUsernameClicked = viewModel::onUsernameClicked,
         onReplyClicked = viewModel::onReplyClicked,
     )
 }
@@ -35,7 +34,6 @@ fun CommentsScreen(
 private fun CommentsContent(
     uiState: CommentsVMState,
     onLikeButtonClicked: (Int) -> Unit,
-    onUsernameClicked: (Int) -> Unit,
     onReplyClicked: (String) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
@@ -90,7 +88,6 @@ private fun CommentsContent(
             commentListType = CommentListType.COMMENTS_PAGE,
             comments = uiState.comments,
             onLikeButtonClicked = onLikeButtonClicked,
-            onUsernameClicked = onUsernameClicked,
         )
     }
 }

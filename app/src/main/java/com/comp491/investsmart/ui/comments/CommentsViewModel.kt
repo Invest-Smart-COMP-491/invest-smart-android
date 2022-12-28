@@ -35,6 +35,26 @@ class CommentsViewModel @Inject constructor(
     val commentId = savedStateHandle.get<String>(NavRoute.Comments.commentId)?.toString()
 
     init {
+        refreshComments()
+    }
+
+    fun onLikeButtonClicked(commentId: Int) {
+
+    }
+
+    fun onReplyClicked(text: String) {
+        viewModelScope.launch {
+            addCommentUseCase(
+                assetTicker = vmState.comments[0].assetTicker,
+                text = text,
+                parentId = commentId?.toInt(),
+            )
+
+            refreshComments()
+        }
+    }
+
+    private fun refreshComments() {
         commentId?.let {
             viewModelScope.launch {
                 // TODO: Handle error
@@ -50,24 +70,6 @@ class CommentsViewModel @Inject constructor(
                     isLoading = false,
                 )
             }
-        }
-    }
-
-    fun onLikeButtonClicked(commentId: Int) {
-
-    }
-
-    fun onUsernameClicked(userId: Int) {
-
-    }
-
-    fun onReplyClicked(text: String) {
-        viewModelScope.launch {
-            addCommentUseCase(
-                assetTicker = vmState.comments[0].assetTicker,
-                text = text,
-                parentId = commentId?.toInt(),
-            )
         }
     }
 }

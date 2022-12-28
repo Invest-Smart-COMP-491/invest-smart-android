@@ -150,6 +150,22 @@ class AssetDetailViewModel @Inject constructor(
                 text = text,
                 parentId = null,
             )
+
+            val comments = async {
+                getAssetCommentsUseCase(
+                    assetTicker = vmState.asset.assetTicker,
+                    commentParent = "", userId = null
+                ).data ?: emptyList()
+            }
+
+            _vmState.value = AssetDetailVMState(
+                asset = vmState.asset,
+                assetNews = vmState.assetNews,
+                assetComments = comments.await(),
+                isFollowed = vmState.isFollowed,
+                isLoading = vmState.isLoading,
+                pageType = vmState.pageType,
+            )
         }
     }
 }

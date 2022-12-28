@@ -2,7 +2,6 @@ package com.comp491.investsmart.data.api.retrofit
 
 import com.comp491.investsmart.data.assets.entities.AssetEntity
 import com.comp491.investsmart.data.assets.entities.AssetPriceEntity
-import com.comp491.investsmart.data.assets.entities.AssetTickerEntity
 import com.comp491.investsmart.data.comments.entities.AddCommentEntity
 import com.comp491.investsmart.data.comments.entities.CommentEntity
 import com.comp491.investsmart.data.news.entities.NewsEntity
