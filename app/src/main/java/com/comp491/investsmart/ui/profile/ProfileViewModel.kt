@@ -45,29 +45,14 @@ class ProfileViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-
-            val comments = async {
-                getAssetCommentsUseCase(
-                    assetTicker = null,
-                    commentParent = null,
-                    userId = null, //TODO: User id here.
-                ).data ?: emptyList()
-            }
-
-            val likedComments = async {
-                getUserLikedCommentsUseCase(userId = null).data ?: emptyList()
-            }
-
-            val username = async {
-                getUserInfoUseCase(infoType = UserInfoType.USERNAME)
-            }
-
             _vmState.value = ProfileVMState(
-                comments = comments.await(),
-                likedComments = likedComments.await(),
-                username = username.await(),
-                isLoading = false,
+                comments = vmState.comments,
+                likedComments = vmState.likedComments,
+                username = getUserInfoUseCase(infoType = UserInfoType.USERNAME),
+                isLoading = true,
             )
+
+            updateComments()
         }
     }
 
@@ -82,28 +67,37 @@ class ProfileViewModel @Inject constructor(
     fun onCommentLikeButtonClicked(commentId: Int) {
         viewModelScope.launch {
             if(_vmState.value.likedComments.any { x -> x.id == commentId}){
-                async{
-                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
-                }.await()
+                likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
             }else{
-                async{
-                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
-                }.await()
+                likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
             }
-            _vmState.value.comments = async {
+
+            updateComments()
+        }
+    }
+
+    private fun updateComments() {
+        viewModelScope.launch {
+            val userId = getUserInfoUseCase(UserInfoType.USERID).toInt()
+
+            val likedComments = async {
+                getUserLikedCommentsUseCase(userId = userId).data ?: emptyList()
+            }
+
+            val comments = async {
                 getAssetCommentsUseCase(
                     assetTicker = null,
                     commentParent = null,
-                    userId = null, //TODO: User id here.
+                    userId = userId,
                 ).data ?: emptyList()
-            }.await()
+            }
 
-            _vmState.value.likedComments = async {
-                getUserLikedCommentsUseCase(
-                    userId = null
-                ).data ?: emptyList()
-            }.await()
-
+            _vmState.value = ProfileVMState(
+                comments = comments.await(),
+                likedComments = likedComments.await(),
+                username = vmState.username,
+                isLoading = false,
+            )
         }
     }
 }
