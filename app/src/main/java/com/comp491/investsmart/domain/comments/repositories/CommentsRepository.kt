@@ -11,4 +11,5 @@ interface CommentsRepository {
     suspend fun getCommentById(commentId: Int): Result<Comment>
     suspend fun likeComment(commentId: Int): Result<Unit>
     suspend fun unlikeComment(commentId: Int): Result<Unit>
+    suspend fun getUserLikedComments(userId: Int?): Result<List<Comment>>
 }

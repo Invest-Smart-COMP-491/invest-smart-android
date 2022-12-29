@@ -41,7 +41,7 @@ fun AssetDetailScreen(
                 navController = navController,
             )
         },
-        onCommentLikeButtonClicked = viewModel::onCommentLikeButtonClicked,
+        onCommentLikeButtonClicked = {id -> viewModel.onCommentLikeButtonClicked(commentId = id)},
         onAssetFavouriteButtonClicked = viewModel::onAssetFavouriteButtonClicked,
         onPageTypeChanged = viewModel::onPageTypeChanged,
         onPriceGraphButtonClicked = {
@@ -151,6 +151,7 @@ fun AssetDetailContent(
                     CommentList(
                         commentListType = CommentListType.ASSET_DETAIL_PAGE,
                         comments = uiState.assetComments,
+                        likedComments = uiState.likedComments,
                         onLikeButtonClicked = onCommentLikeButtonClicked,
                         onAnswerButtonClicked = onAnswerButtonClicked,
                     )

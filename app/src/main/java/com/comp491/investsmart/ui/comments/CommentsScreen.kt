@@ -87,6 +87,7 @@ private fun CommentsContent(
         CommentList(
             commentListType = CommentListType.COMMENTS_PAGE,
             comments = uiState.comments,
+            likedComments = uiState.likedComments,
             onLikeButtonClicked = onLikeButtonClicked,
         )
     }

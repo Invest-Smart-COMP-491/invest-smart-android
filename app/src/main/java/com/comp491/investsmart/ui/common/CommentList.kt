@@ -22,6 +22,7 @@ import com.comp491.investsmart.ui.theme.montserratFamily
 fun CommentList(
     commentListType: CommentListType,
     comments: List<Comment>,
+    likedComments: List<Comment>,
     onLikeButtonClicked: (Int) -> Unit = {},
     onAnswerButtonClicked: (Int) -> Unit = {},
     onUsernameClicked: (Int) -> Unit = {},
@@ -33,6 +34,7 @@ fun CommentList(
                 CommentsRow(
                     commentListType = commentListType,
                     comment = comment,
+                    isLiked = likedComments.any { x -> x.id == comment.id},
                     onLikeButtonClicked = onLikeButtonClicked,
                     onAnswerButtonClicked = onAnswerButtonClicked,
                     onUsernameClicked = onUsernameClicked,
@@ -56,12 +58,13 @@ fun CommentList(
 fun CommentsRow(
     commentListType: CommentListType,
     comment: Comment,
+    isLiked: Boolean,
     onLikeButtonClicked: (Int) -> Unit,
     onAnswerButtonClicked: (Int) -> Unit,
     onUsernameClicked: (Int) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
-    var likedBefore by remember { mutableStateOf(false) }
+    var likedBefore by remember { mutableStateOf(isLiked) }
 
     Column(
         modifier = Modifier

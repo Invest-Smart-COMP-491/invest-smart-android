@@ -6,6 +6,9 @@ import com.squareup.moshi.Json
 
 @Keep
 data class CommentEntity(
+    @Json(name="id")
+    val id: Int,
+
     @Json(name = "username")
     val username: String,
 
@@ -30,7 +33,7 @@ data class CommentEntity(
 
 fun CommentEntity.toDomain(): Comment {
     return Comment(
-        id = 0,
+        id = id,
         username = username,
         userId = userId,
         assetTicker = assetTicker,

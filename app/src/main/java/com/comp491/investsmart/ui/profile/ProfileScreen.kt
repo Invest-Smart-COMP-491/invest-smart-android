@@ -29,6 +29,11 @@ fun ProfileScreen(
                 navController = navController,
             )
         },
+
+        onCommentLikeButtonClicked = { id ->
+            viewModel.onCommentLikeButtonClicked(commentId = id)
+        },
+
         onAssetTickerClicked = { assetTicker ->
             viewModel.onAssetTickerClicked(
                 navController = navController,
@@ -41,6 +46,7 @@ fun ProfileScreen(
 @Composable
 private fun ProfileContent(
     uiState: ProfileVMState,
+    onCommentLikeButtonClicked: (Int) -> Unit,
     onAnswerButtonClicked: (Int) -> Unit,
     onAssetTickerClicked: (String) -> Unit,
 ) {
@@ -76,6 +82,8 @@ private fun ProfileContent(
             CommentList(
                 commentListType = CommentListType.PROFILE_PAGE,
                 comments = uiState.comments,
+                likedComments = uiState.likedComments,
+                onLikeButtonClicked = onCommentLikeButtonClicked,
                 onAnswerButtonClicked = onAnswerButtonClicked,
                 onAssetTickerClicked = onAssetTickerClicked,
             )

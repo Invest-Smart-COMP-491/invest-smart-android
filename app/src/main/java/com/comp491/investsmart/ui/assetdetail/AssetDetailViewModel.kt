@@ -11,8 +11,10 @@ import com.comp491.investsmart.domain.assets.usecases.FollowUnfollowAssetUseCase
 import com.comp491.investsmart.domain.assets.usecases.GetAssetUseCase
 import com.comp491.investsmart.domain.assets.usecases.GetFavouriteAssetsUseCase
 import com.comp491.investsmart.domain.comments.entities.Comment
+import com.comp491.investsmart.domain.comments.entities.CommentAction
 import com.comp491.investsmart.domain.comments.usecases.AddCommentUseCase
 import com.comp491.investsmart.domain.comments.usecases.GetAssetCommentsUseCase
+import com.comp491.investsmart.domain.comments.usecases.GetUserLikedCommentsUseCase
 import com.comp491.investsmart.domain.comments.usecases.LikeUnlikeCommentUseCase
 import com.comp491.investsmart.domain.news.entities.News
 import com.comp491.investsmart.domain.news.usecases.GetAssetNewsUseCase
@@ -33,7 +35,8 @@ enum class PageType {
 data class AssetDetailVMState(
     var asset: Asset,
     val assetNews: List<News>,
-    val assetComments: List<Comment>,
+    var assetComments: List<Comment>,
+    var likedComments: List<Comment>,
     var isFollowed: Boolean,
     val isLoading: Boolean,
     val pageType: PageType,
@@ -48,6 +51,7 @@ class AssetDetailViewModel @Inject constructor(
     private val getFavouriteAssetsUseCase: GetFavouriteAssetsUseCase,
     private val followUnfollowAssetUseCase: FollowUnfollowAssetUseCase,
     private val addCommentUseCase: AddCommentUseCase,
+    private val getUserLikedCommentsUseCase: GetUserLikedCommentsUseCase,
     private val likeUnlikeCommentUseCase: LikeUnlikeCommentUseCase,
 ) : ViewModel() {
 
@@ -63,6 +67,7 @@ class AssetDetailViewModel @Inject constructor(
         ),
         assetNews = emptyList(),
         assetComments = emptyList(),
+        likedComments = emptyList(),
         isFollowed = false,
         isLoading = true,
         pageType = PageType.NEWS,
@@ -85,6 +90,10 @@ class AssetDetailViewModel @Inject constructor(
                 getAssetCommentsUseCase(assetTicker = ticker, commentParent = "", userId = null).data ?: emptyList()
             }
 
+            val likedComments = async {
+                getUserLikedCommentsUseCase(userId = null).data ?: emptyList()
+            }
+
             val userFavouriteAssets = async{
                 getFavouriteAssetsUseCase().data ?: emptyList()
             }
@@ -93,6 +102,7 @@ class AssetDetailViewModel @Inject constructor(
                 asset = asset.await(),
                 assetNews = news.await(),
                 assetComments = comments.await(),
+                likedComments = likedComments.await(),
                 isFollowed = userFavouriteAssets.await().any { x -> x.assetTicker == asset.await().assetTicker},
                 isLoading = false,
                 pageType = PageType.NEWS,
@@ -104,6 +114,7 @@ class AssetDetailViewModel @Inject constructor(
         _vmState.value = AssetDetailVMState(
             asset = _vmState.value.asset,
             assetComments = _vmState.value.assetComments,
+            likedComments = _vmState.value.likedComments,
             assetNews = _vmState.value.assetNews,
             isFollowed = _vmState.value.isFollowed,
             isLoading = false,
@@ -125,7 +136,30 @@ class AssetDetailViewModel @Inject constructor(
     }
 
     fun onCommentLikeButtonClicked(commentId: Int) {
+        viewModelScope.launch {
+            if(_vmState.value.likedComments.any { x -> x.id == commentId}){
+                async{
+                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
+                }.await()
+            }else{
+                async{
+                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
+                }.await()
+            }
+            _vmState.value.assetComments = async {
+                getAssetCommentsUseCase(
+                    assetTicker = _vmState.value.asset.assetTicker,
+                    commentParent = "", userId = null
+                ).data ?: emptyList()
+            }.await()
 
+            _vmState.value.likedComments = async {
+                getUserLikedCommentsUseCase(
+                    userId = null
+                ).data ?: emptyList()
+            }.await()
+
+        }
     }
 
     fun onAssetFavouriteButtonClicked() {
@@ -160,10 +194,17 @@ class AssetDetailViewModel @Inject constructor(
                 ).data ?: emptyList()
             }
 
+            val likedComments = async {
+                getUserLikedCommentsUseCase(
+                    userId = null
+                ).data ?: emptyList()
+            }
+
             _vmState.value = AssetDetailVMState(
                 asset = _vmState.value.asset,
                 assetNews = _vmState.value.assetNews,
                 assetComments = comments.await(),
+                likedComments = likedComments.await(),
                 isFollowed = _vmState.value.isFollowed,
                 isLoading = _vmState.value.isLoading,
                 pageType = _vmState.value.pageType,

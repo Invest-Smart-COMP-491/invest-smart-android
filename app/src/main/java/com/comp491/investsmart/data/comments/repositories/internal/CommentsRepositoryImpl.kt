@@ -29,6 +29,22 @@ class CommentsRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getUserLikedComments(userId: Int?): Result<List<Comment>>{
+        val result = safeApiCall {
+            if(userId == null){
+                investSmartService.getUserLikedComments(userId = dataStoreManager.userid.first())
+            }else{
+                investSmartService.getUserLikedComments(userId = userId)
+            }
+        }
+
+        return if (result is Result.Success) {
+            Result.Success(data = result.data?.map { it.toDomain() }  ?: emptyList())
+        } else {
+            Result.Error(errorMessage = result.message ?: "Something went wrong")
+        }
+    }
+
     override suspend fun addComment(addComment: AddComment): Result<Unit> {
         return safeApiCall {
             investSmartService.addComment(
