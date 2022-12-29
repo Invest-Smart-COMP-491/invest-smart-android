@@ -78,7 +78,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun updateComments() {
         viewModelScope.launch {
-            val userId = getUserInfoUseCase(UserInfoType.USERID).toInt()
+            val userId = getUserInfoUseCase(UserInfoType.USER_ID).toInt()
 
             val likedComments = async {
                 getUserLikedCommentsUseCase(userId = userId).data ?: emptyList()

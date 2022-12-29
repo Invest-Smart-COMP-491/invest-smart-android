@@ -1,7 +1,7 @@
 package com.comp491.investsmart.domain.users.entities
 
 enum class UserInfoType {
-    USERID,
+    USER_ID,
     EMAIL,
     USERNAME,
     TOKEN;

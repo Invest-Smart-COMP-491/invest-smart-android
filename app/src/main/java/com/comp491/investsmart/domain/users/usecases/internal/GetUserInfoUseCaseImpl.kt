@@ -12,7 +12,7 @@ class GetUserInfoUseCaseImpl @Inject constructor(
 
     override suspend fun invoke(infoType: UserInfoType): String {
         return when (infoType) {
-            UserInfoType.USERID -> {
+            UserInfoType.USER_ID -> {
                 dataStoreManager.userid.first().toString()
             }
             UserInfoType.EMAIL -> {

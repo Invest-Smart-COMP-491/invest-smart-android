@@ -75,8 +75,9 @@ class AssetDetailViewModel @Inject constructor(
     private val _vmState = MutableStateFlow(vmState)
     val uiState: StateFlow<AssetDetailVMState> = _vmState.asStateFlow()
 
+    private val ticker = savedStateHandle.get<String>(NavRoute.AssetDetail.assetTicker).toString()
+
     init {
-        val ticker = savedStateHandle.get<String>(NavRoute.AssetDetail.assetTicker).toString()
         viewModelScope.launch {
             val asset = async {
                 getAssetUseCase(assetTicker = ticker).data ?: _vmState.value.asset
@@ -86,14 +87,6 @@ class AssetDetailViewModel @Inject constructor(
                 getAssetNewsUseCase(assetTicker = ticker).data ?: emptyList()
             }
 
-            val comments = async {
-                getAssetCommentsUseCase(assetTicker = ticker, commentParent = "", userId = null).data ?: emptyList()
-            }
-
-            val likedComments = async {
-                getUserLikedCommentsUseCase(userId = null).data ?: emptyList()
-            }
-
             val userFavouriteAssets = async{
                 getFavouriteAssetsUseCase().data ?: emptyList()
             }
@@ -101,12 +94,15 @@ class AssetDetailViewModel @Inject constructor(
             _vmState.value = AssetDetailVMState(
                 asset = asset.await(),
                 assetNews = news.await(),
-                assetComments = comments.await(),
-                likedComments = likedComments.await(),
-                isFollowed = userFavouriteAssets.await().any { x -> x.assetTicker == asset.await().assetTicker},
+                assetComments = vmState.assetComments,
+                likedComments = vmState.likedComments,
+                isFollowed = userFavouriteAssets.await()
+                    .any { x -> x.assetTicker == asset.await().assetTicker},
                 isLoading = false,
                 pageType = PageType.NEWS,
             )
+
+            updateComments()
         }
     }
 
@@ -138,76 +134,65 @@ class AssetDetailViewModel @Inject constructor(
     fun onCommentLikeButtonClicked(commentId: Int) {
         viewModelScope.launch {
             if(_vmState.value.likedComments.any { x -> x.id == commentId}){
-                async{
-                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
-                }.await()
+                likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
             }else{
-                async{
-                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
-                }.await()
+                likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
             }
-            _vmState.value.assetComments = async {
-                getAssetCommentsUseCase(
-                    assetTicker = _vmState.value.asset.assetTicker,
-                    commentParent = "", userId = null
-                ).data ?: emptyList()
-            }.await()
 
-            _vmState.value.likedComments = async {
-                getUserLikedCommentsUseCase(
-                    userId = null
-                ).data ?: emptyList()
-            }.await()
-
+            updateComments()
         }
     }
 
     fun onAssetFavouriteButtonClicked() {
         viewModelScope.launch {
             if(_vmState.value.isFollowed){
-                async{
-                    followUnfollowAssetUseCase.invoke(FavouriteAssetAction.UNFOLLOW, _vmState.value.asset.assetTicker)
-                }.await()
+                followUnfollowAssetUseCase.invoke(
+                    favouriteAssetAction = FavouriteAssetAction.UNFOLLOW,
+                    assetTicker = vmState.asset.assetTicker
+                )
                 _vmState.value.isFollowed = false
             }else{
-                async{
-                    followUnfollowAssetUseCase.invoke(FavouriteAssetAction.FOLLOW, _vmState.value.asset.assetTicker)
-                }.await()
+                followUnfollowAssetUseCase.invoke(
+                    favouriteAssetAction = FavouriteAssetAction.FOLLOW,
+                    assetTicker = vmState.asset.assetTicker
+                )
                 _vmState.value.isFollowed = true
             }
-
         }
     }
 
     fun onSendClicked(text: String) {
         viewModelScope.launch {
             addCommentUseCase(
-                assetTicker = _vmState.value.asset.assetTicker,
+                assetTicker = vmState.asset.assetTicker,
                 text = text,
                 parentId = null,
             )
 
+            updateComments()
+        }
+    }
+
+    private fun updateComments() {
+        viewModelScope.launch {
             val comments = async {
                 getAssetCommentsUseCase(
-                    assetTicker = _vmState.value.asset.assetTicker,
-                    commentParent = "", userId = null
+                    assetTicker = ticker, commentParent = "", userId = null
                 ).data ?: emptyList()
             }
 
             val likedComments = async {
-                getUserLikedCommentsUseCase(
-                    userId = null
-                ).data ?: emptyList()
+                getUserLikedCommentsUseCase(userId = null).data ?: emptyList()
             }
 
             _vmState.value = AssetDetailVMState(
-                asset = _vmState.value.asset,
-                assetNews = _vmState.value.assetNews,
+                asset = vmState.asset,
+                assetNews = vmState.assetNews,
                 assetComments = comments.await(),
                 likedComments = likedComments.await(),
-                isFollowed = _vmState.value.isFollowed,
-                isLoading = _vmState.value.isLoading,
-                pageType = _vmState.value.pageType,
+                isFollowed = vmState.isFollowed,
+                isLoading = vmState.isLoading,
+                pageType = vmState.pageType,
             )
         }
     }

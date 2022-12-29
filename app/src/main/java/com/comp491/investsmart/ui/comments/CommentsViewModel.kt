@@ -8,7 +8,6 @@ import com.comp491.investsmart.domain.comments.entities.CommentAction
 import com.comp491.investsmart.domain.comments.usecases.*
 import com.comp491.investsmart.navigation.NavRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -49,28 +48,12 @@ class CommentsViewModel @Inject constructor(
     fun onLikeButtonClicked(commentId: Int) {
         viewModelScope.launch {
             if(_vmState.value.likedComments.any { x -> x.id == commentId}){
-                async{
-                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
-                }.await()
+                likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.UNLIKE)
             }else{
-                async{
-                    likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
-                }.await()
+                likeUnlikeCommentUseCase.invoke(commentId = commentId, CommentAction.LIKE)
             }
-            _vmState.value.comments = async {
-                getAssetCommentsUseCase(
-                    assetTicker = null,
-                    commentParent = _vmState.value.parentComment.id.toString(),
-                    userId = null,
-                ).data ?: emptyList()
-            }.await()
 
-            _vmState.value.likedComments = async {
-                getUserLikedCommentsUseCase(
-                    userId = null
-                ).data ?: emptyList()
-            }.await()
-
+            refreshComments()
         }
     }
 
