@@ -44,7 +44,7 @@ interface InvestSmartService {
     suspend fun getCommentById(@Query("comment_id") comment_id: Int):
             Response<CommentEntity>
 
-    @POST("/api/comments/")
+    @POST("/api/comments")
     suspend fun addComment(
         @Header("Authorization") token: String,
         @Body addCommentEntity: AddCommentEntity,

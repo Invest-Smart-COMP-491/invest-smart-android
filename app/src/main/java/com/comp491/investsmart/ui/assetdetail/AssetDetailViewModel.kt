@@ -148,25 +148,25 @@ class AssetDetailViewModel @Inject constructor(
     fun onSendClicked(text: String) {
         viewModelScope.launch {
             addCommentUseCase(
-                assetTicker = vmState.asset.assetTicker,
+                assetTicker = _vmState.value.asset.assetTicker,
                 text = text,
                 parentId = null,
             )
 
             val comments = async {
                 getAssetCommentsUseCase(
-                    assetTicker = vmState.asset.assetTicker,
+                    assetTicker = _vmState.value.asset.assetTicker,
                     commentParent = "", userId = null
                 ).data ?: emptyList()
             }
 
             _vmState.value = AssetDetailVMState(
-                asset = vmState.asset,
-                assetNews = vmState.assetNews,
+                asset = _vmState.value.asset,
+                assetNews = _vmState.value.assetNews,
                 assetComments = comments.await(),
-                isFollowed = vmState.isFollowed,
-                isLoading = vmState.isLoading,
-                pageType = vmState.pageType,
+                isFollowed = _vmState.value.isFollowed,
+                isLoading = _vmState.value.isLoading,
+                pageType = _vmState.value.pageType,
             )
         }
     }
