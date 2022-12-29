@@ -94,8 +94,8 @@ class AssetDetailViewModel @Inject constructor(
             _vmState.value = AssetDetailVMState(
                 asset = asset.await(),
                 assetNews = news.await(),
-                assetComments = vmState.assetComments,
-                likedComments = vmState.likedComments,
+                assetComments = _vmState.value.assetComments,
+                likedComments = _vmState.value.likedComments,
                 isFollowed = userFavouriteAssets.await()
                     .any { x -> x.assetTicker == asset.await().assetTicker},
                 isLoading = false,
@@ -148,13 +148,13 @@ class AssetDetailViewModel @Inject constructor(
             if(_vmState.value.isFollowed){
                 followUnfollowAssetUseCase.invoke(
                     favouriteAssetAction = FavouriteAssetAction.UNFOLLOW,
-                    assetTicker = vmState.asset.assetTicker
+                    assetTicker = _vmState.value.asset.assetTicker
                 )
                 _vmState.value.isFollowed = false
             }else{
                 followUnfollowAssetUseCase.invoke(
                     favouriteAssetAction = FavouriteAssetAction.FOLLOW,
-                    assetTicker = vmState.asset.assetTicker
+                    assetTicker = _vmState.value.asset.assetTicker
                 )
                 _vmState.value.isFollowed = true
             }
@@ -164,7 +164,7 @@ class AssetDetailViewModel @Inject constructor(
     fun onSendClicked(text: String) {
         viewModelScope.launch {
             addCommentUseCase(
-                assetTicker = vmState.asset.assetTicker,
+                assetTicker = _vmState.value.asset.assetTicker,
                 text = text,
                 parentId = null,
             )
@@ -186,13 +186,13 @@ class AssetDetailViewModel @Inject constructor(
             }
 
             _vmState.value = AssetDetailVMState(
-                asset = vmState.asset,
-                assetNews = vmState.assetNews,
+                asset = _vmState.value.asset,
+                assetNews = _vmState.value.assetNews,
                 assetComments = comments.await(),
                 likedComments = likedComments.await(),
-                isFollowed = vmState.isFollowed,
-                isLoading = vmState.isLoading,
-                pageType = vmState.pageType,
+                isFollowed = _vmState.value.isFollowed,
+                isLoading = _vmState.value.isLoading,
+                pageType = _vmState.value.pageType,
             )
         }
     }

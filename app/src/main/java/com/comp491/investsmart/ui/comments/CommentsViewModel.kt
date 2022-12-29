@@ -75,7 +75,7 @@ class CommentsViewModel @Inject constructor(
                 // TODO: Handle error
                 val parentComment: Comment =
                     getCommentByIdUseCase(commentId = commentId.toInt()).data ?:
-                    vmState.parentComment
+                    _vmState.value.parentComment
 
                 val comments: List<Comment> =
                     getAssetCommentsUseCase(

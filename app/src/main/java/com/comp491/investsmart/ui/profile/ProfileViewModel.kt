@@ -46,8 +46,8 @@ class ProfileViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _vmState.value = ProfileVMState(
-                comments = vmState.comments,
-                likedComments = vmState.likedComments,
+                comments = _vmState.value.comments,
+                likedComments = _vmState.value.likedComments,
                 username = getUserInfoUseCase(infoType = UserInfoType.USERNAME),
                 isLoading = true,
             )
@@ -95,7 +95,7 @@ class ProfileViewModel @Inject constructor(
             _vmState.value = ProfileVMState(
                 comments = comments.await(),
                 likedComments = likedComments.await(),
-                username = vmState.username,
+                username = _vmState.value.username,
                 isLoading = false,
             )
         }
