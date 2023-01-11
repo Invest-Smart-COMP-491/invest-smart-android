@@ -75,7 +75,7 @@ private fun AssetRow(
                     color = Black,
                 )
                 Text(
-                    text = stringResource(id = R.string.asset_followers, asset.viewCount),
+                    text = stringResource(id = R.string.asset_followers, asset.followerCount),
                     fontFamily = montserratFamily,
                     fontWeight = FontWeight.Light,
                     fontSize = 10.sp,

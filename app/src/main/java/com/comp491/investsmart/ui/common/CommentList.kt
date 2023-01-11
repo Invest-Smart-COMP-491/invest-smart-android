@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comp491.investsmart.R
+import com.comp491.investsmart.data.utils.getFormattedDateString
 import com.comp491.investsmart.domain.comments.entities.Comment
 import com.comp491.investsmart.ui.theme.Black
 import com.comp491.investsmart.ui.theme.montserratFamily
@@ -101,7 +102,7 @@ fun CommentsRow(
             }
 
             Text(
-                text = comment.date,
+                text = getFormattedDateString(comment.date),
                 fontFamily = montserratFamily,
                 fontWeight = FontWeight.Light,
                 fontSize = 10.sp,

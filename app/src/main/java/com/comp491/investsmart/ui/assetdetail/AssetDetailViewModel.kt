@@ -64,6 +64,7 @@ class AssetDetailViewModel @Inject constructor(
             viewCount = 0,
             photoUrl = "",
             marketSize = 0.0,
+            followerCount = 0,
         ),
         assetNews = emptyList(),
         assetComments = emptyList(),

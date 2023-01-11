@@ -66,7 +66,7 @@ class AssetsRepositoryImpl @Inject constructor(
         }
 
         return if (result is Result.Success) {
-            Result.Success(data = result.data?.toDomain() ?: Asset("","",0.0,"",0,"",0.0))
+            Result.Success(data = result.data?.toDomain() ?: Asset("","",0.0,"",0,"",0.0, 0))
         } else {
             Result.Error(errorMessage = result.message ?: "Something went wrong")
         }

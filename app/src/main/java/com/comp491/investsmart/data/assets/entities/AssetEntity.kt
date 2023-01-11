@@ -26,6 +26,9 @@ data class AssetEntity(
 
     @Json(name = "market_size")
     val marketSize: Double,
+
+    @Json(name = "follower_count")
+    val followerCount: Int,
 )
 
 fun AssetEntity.toDomain(): Asset {
@@ -37,5 +40,6 @@ fun AssetEntity.toDomain(): Asset {
         viewCount = viewCount,
         photoUrl = photoUrl,
         marketSize = marketSize,
+        followerCount = followerCount,
     )
 }

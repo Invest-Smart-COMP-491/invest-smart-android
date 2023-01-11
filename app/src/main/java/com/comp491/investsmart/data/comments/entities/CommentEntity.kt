@@ -29,6 +29,9 @@ data class CommentEntity(
 
     @Json(name = "imported_from")
     val importedFrom: String?,
+
+    @Json(name = "child_count")
+    val answerCount: Int,
 )
 
 fun CommentEntity.toDomain(): Comment {
@@ -41,6 +44,6 @@ fun CommentEntity.toDomain(): Comment {
         date = date,
         likeCount = likedUsers.size,
         importedFrom = importedFrom,
-        answerCount = 0,
+        answerCount = answerCount,
     )
 }
