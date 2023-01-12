@@ -18,6 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -120,7 +122,8 @@ private fun LoginContent(
             value = passwordTextFieldValue,
             onValueChange = { newValue ->
                 passwordTextFieldValue = newValue
-            }
+            },
+            isPassword = true,
         )
         
         Spacer(modifier = Modifier.height(30.dp))
@@ -187,6 +190,7 @@ private fun LoginTextField(
     label: @Composable () -> Unit,
     value: String,
     onValueChange: (String) -> Unit,
+    isPassword: Boolean = false,
 ) {
     TextField(
         value = value,
@@ -212,6 +216,11 @@ private fun LoginTextField(
                 focusManager.clearFocus()
             }
         ),
+        visualTransformation = if (isPassword) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
+        },
     )
 }
 
